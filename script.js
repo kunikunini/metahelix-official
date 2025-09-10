@@ -282,7 +282,7 @@ function renderContact(contact) {
     // Build collapsible card
     embedWrap.classList.add('collapse-card');
     const head = createEl('button', { className: 'collapse-head' });
-    const title = (getLang() === 'en') ? 'Contact Form' : 'お問い合わせフォーム';
+    const title = 'Contact Form';
     head.setAttribute('type', 'button');
     head.setAttribute('aria-expanded', 'false');
     const hid = 'contact-collapse-body';
