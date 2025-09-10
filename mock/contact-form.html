@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>お問い合わせフォーム（楽曲制作・取材等のご相談） — モック</title>
+    <style>
+      :root { --bg:#0b0f1a; --panel:#101522; --text:#e8f5ff; --muted:#90a6ba; --brand:#00e0ff; --accent:#ff2fb9; --ring:rgba(0,224,255,.35); }
+      *{ box-sizing:border-box }
+      body{ margin:0; padding:24px; background:linear-gradient(180deg, rgba(123,97,255,.06), transparent 22%), var(--bg); color:var(--text); font-family:"Noto Sans JP", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; line-height:1.6 }
+      .wrap{ max-width:800px; margin:0 auto }
+      h1{ font-size:22px; margin:0 0 6px }
+      .desc{ color:var(--muted); margin:0 0 18px; font-size:14px }
+      form{ background:var(--panel); border:1px solid rgba(0,224,255,.25); border-radius:12px; padding:18px; box-shadow:0 0 24px rgba(0,224,255,.12) }
+      .row{ margin-bottom:14px; display:grid; gap:6px }
+      label{ font-size:13px; color:var(--muted) }
+      input[type="text"], input[type="email"], textarea{ background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.18); color:var(--text); padding:10px 12px; border-radius:10px; outline:none }
+      input[type="text"]:focus, input[type="email"]:focus, textarea:focus{ border-color:var(--brand); box-shadow:0 0 0 6px var(--ring) }
+      textarea{ resize:vertical; min-height:96px }
+      .help{ color:var(--muted); font-size:12px }
+      .radios{ display:grid; gap:8px; padding:10px 12px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.14); border-radius:10px }
+      .checkbox{ display:flex; gap:8px; align-items:flex-start }
+      .error{ color:#ffd1d9; background:rgba(255,92,122,.1); border:1px solid rgba(255,92,122,.4); padding:8px 10px; border-radius:8px; font-size:12px; display:none }
+      .btn{ display:inline-block; background:linear-gradient(90deg, var(--accent), var(--brand)); color:#061018; font-weight:800; padding:12px 18px; border-radius:999px; border:0; cursor:pointer }
+      .btn:hover{ filter:brightness(1.06) }
+      .note{ color:var(--muted); font-size:12px; margin-top:12px }
+      .privacy{ margin-top:18px; font-size:13px; color:var(--muted) }
+      .success{ display:none; margin-top:14px; padding:12px; border-radius:10px; background:rgba(0,224,255,.08); border:1px solid rgba(0,224,255,.28) }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>お問い合わせフォーム（楽曲制作・取材等のご相談）</h1>
+      <p class="desc">
+        楽曲制作、雑誌・Webメディア取材などに関するご相談を承ります。制作のご依頼の際は、企画内容・スケジュール・ご予算をお知らせください。<br />
+        ※映像制作のご相談は現在受付を停止しております。内容によっては返信できない場合があります。個人情報はご連絡手段としてのみ使用いたします。
+      </p>
+
+      <form id="mockForm" novalidate>
+        <div class="row">
+          <label for="name">お名前 <span aria-hidden="true">*</span></label>
+          <input id="name" name="name" type="text" required placeholder="山田 太郎" />
+          <div class="help">ニックネーム可。ご担当者名でも構いません。</div>
+          <div class="error" id="e-name">お名前は必須です。</div>
+        </div>
+
+        <div class="row">
+          <label for="email">メールアドレス <span aria-hidden="true">*</span></label>
+          <input id="email" name="email" type="email" required placeholder="you@example.com" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" />
+          <div class="help">返信用のメールアドレスをご記入ください。</div>
+          <div class="error" id="e-email">メールアドレス形式で入力してください。</div>
+        </div>
+
+        <div class="row">
+          <span>お問い合わせ種別 <span aria-hidden="true">*</span></span>
+          <div class="radios" role="group" aria-labelledby="type-label">
+            <label><input type="radio" name="q_type" value="楽曲制作のご依頼" required /> 楽曲制作のご依頼</label>
+            <label><input type="radio" name="q_type" value="雑誌／Webメディアの取材依頼" /> 雑誌／Webメディアの取材依頼</label>
+            <label><input type="radio" name="q_type" value="その他のお問い合わせ" /> その他のお問い合わせ</label>
+          </div>
+          <div class="error" id="e-type">お問い合わせ種別を選択してください。</div>
+        </div>
+
+        <div class="row">
+          <label for="brief">企画内容／ご相談内容 <span aria-hidden="true">*</span></label>
+          <textarea id="brief" name="brief" required placeholder="依頼用途・イメージ・参考曲など"></textarea>
+          <div class="help">制作依頼：用途、イメージ、提供物など／取材依頼：媒体名、企画趣旨、掲載予定日など。</div>
+          <div class="error" id="e-brief">内容をご記入ください。</div>
+        </div>
+
+        <div class="row">
+          <label for="schedule">スケジュール（納期・取材予定日など）</label>
+          <textarea id="schedule" name="schedule" placeholder="わかる範囲でご記入ください。"></textarea>
+        </div>
+
+        <div class="row">
+          <label for="budget">ご予算（目安）</label>
+          <input id="budget" name="budget" type="text" placeholder="例）5万円〜10万円、応相談 など" />
+        </div>
+
+        <div class="row">
+          <label for="notes">その他・連絡事項</label>
+          <textarea id="notes" name="notes" placeholder="共有したいURLや補足事項があればご記入ください。"></textarea>
+        </div>
+
+        <div class="row">
+          <div class="checkbox">
+            <input id="consent" name="consent" type="checkbox" required />
+            <label for="consent">映像制作のご相談は受付停止中であること、内容によっては返信できない場合があることに同意します <span aria-hidden="true">*</span></label>
+          </div>
+          <div class="error" id="e-consent">同意が必要です。</div>
+        </div>
+
+        <button class="btn" type="submit">送信（デモ）</button>
+        <p class="note">このモックは送信されません。Googleフォーム埋め込みで運用してください。</p>
+        <div class="success" id="ok">
+          お問い合わせありがとうございます。内容を確認後、折り返しご連絡いたします。<br />
+          お急ぎ、または数日経っても返信がない場合は、恐れ入りますがメールにて再度ご連絡ください。
+        </div>
+
+        <div class="privacy">
+          個人情報はご連絡手段としてのみ使用いたします。送信内容は社内で必要な範囲で共有されます。詳細はプライバシーポリシーをご確認ください。
+        </div>
+      </form>
+    </div>
+
+    <script>
+      const F = document.getElementById('mockForm');
+      F.addEventListener('submit', (e) => {
+        e.preventDefault();
+        let ok = true;
+        const setErr = (id, show) => { const el = document.getElementById(id); if (el) el.style.display = show ? 'block' : 'none'; };
+        // name
+        setErr('e-name', false);
+        if (!F.name.value.trim()) { setErr('e-name', true); ok = false; }
+        // email
+        setErr('e-email', false);
+        const email = F.email.value.trim();
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !re.test(email)) { setErr('e-email', true); ok = false; }
+        // type
+        setErr('e-type', false);
+        if (!F.querySelector('input[name="q_type"]:checked')) { setErr('e-type', true); ok = false; }
+        // brief
+        setErr('e-brief', false);
+        if (!F.brief.value.trim()) { setErr('e-brief', true); ok = false; }
+        // consent
+        setErr('e-consent', false);
+        if (!F.consent.checked) { setErr('e-consent', true); ok = false; }
+        if (!ok) return;
+        document.getElementById('ok').style.display = 'block';
+        F.reset();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    </script>
+  </body>
+  </html>
+
