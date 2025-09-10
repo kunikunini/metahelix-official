@@ -329,6 +329,7 @@ a:hover { text-decoration: underline; }
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x proximity;
   padding-bottom: 10px;
+  position: relative;
 }
 .artists .card, .works .card { grid-column: auto !important; scroll-snap-align: start; }
 
@@ -361,6 +362,23 @@ a:hover { text-decoration: underline; }
   0% { background-position: 0% 50%; }
   100% { background-position: 200% 50%; }
 }
+
+/* Always-visible animated rail to imply horizontal scroll */
+.artists .card-grid::after, .works .card-grid::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: 8px;
+  background: linear-gradient(90deg,
+    var(--accent-soft) 0%, var(--accent-2) 18%, var(--brand) 36%, var(--accent-2) 54%, var(--accent-soft) 72%, var(--brand) 90%, var(--accent-2) 100%
+  );
+  background-size: 300% 100%;
+  animation: slideGradient 9s linear infinite;
+  opacity: .9;
+  border-radius: 999px;
+  box-shadow: 0 0 14px var(--glow-c), 0 0 20px var(--glow-m);
+  pointer-events: none;
+}
+.artists .card-grid:hover::after, .works .card-grid:hover::after { animation-duration: 6s; filter: brightness(1.1) saturate(1.08); }
 .card { grid-column: span 4; background: rgba(12, 15, 21, 0.7); border: 1px solid rgba(0,229,255,0.22); border-radius: var(--radius); overflow: clip; position: relative; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
   display: flex; flex-direction: column; box-shadow: 0 0 24px rgba(0,229,255,.12); }
 .card::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(135deg, rgba(255,47,185,.18), rgba(0,229,255,.18)); opacity: .06; }
