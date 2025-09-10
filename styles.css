@@ -18,6 +18,7 @@
   --container: 1120px;
   --radius: 14px;
   --shadow: 0 10px 34px rgba(0,0,0,.55);
+  --header-h: 72px;
 }
 
 * { box-sizing: border-box; }
@@ -36,6 +37,7 @@ body {
     radial-gradient(1200px 800px at 10% -10%, rgba(255,47,185,.08), transparent),
     var(--bg);
   line-height: 1.6;
+  padding-top: var(--header-h);
 }
 
 /* animated grid overlay */
@@ -148,8 +150,8 @@ a:hover { text-decoration: underline; }
 
 /* Header */
 .site-header {
-  position: sticky;
-  top: 0;
+  position: fixed;
+  top: 0; left: 0; right: 0;
   z-index: 50;
   background: rgba(6, 7, 10, 0.78);
   backdrop-filter: blur(12px) saturate(1.05);
@@ -160,8 +162,15 @@ a:hover { text-decoration: underline; }
 .brand { font-weight: 700; letter-spacing: .8px; color: var(--text); font-family: Oxanium, "Noto Sans JP", sans-serif; text-transform: uppercase; text-shadow: 0 0 14px var(--glow-c), 0 0 26px var(--glow-m); }
 
 .lang-switch { display: inline-flex; gap: 6px; margin-left: 16px; }
-.lang-switch button { background: rgba(255,255,255,0.06); color: var(--text); border: 1px solid rgba(255,255,255,0.18); border-radius: 999px; padding: 6px 10px; cursor: pointer; font-size: 12px; }
+.lang-switch button { background: rgba(255,255,255,0.06); color: var(--text); border: 1px solid rgba(255,255,255,0.18); border-radius: 999px; padding: 6px 10px; cursor: pointer; font-size: 12px; transition: box-shadow .2s, filter .2s, background .2s; }
 .lang-switch button:hover { border-color: var(--brand); box-shadow: 0 0 0 4px var(--ring); }
+.lang-switch button[aria-pressed="true"] {
+  background: linear-gradient(90deg, var(--accent-soft), var(--accent-2), var(--brand));
+  color: #041218;
+  box-shadow: 0 0 16px var(--glow-c), 0 0 24px var(--glow-m);
+  border-color: transparent;
+  filter: brightness(1.02) saturate(1.02);
+}
 
 .nav-toggle { display: none; background: none; border: 0; width: 44px; height: 44px; position: relative; }
 .nav-toggle span { position: absolute; left: 10px; right: 10px; height: 2px; background: var(--text); border-radius: 2px; transition: .25s; }

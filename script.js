@@ -6,9 +6,18 @@ function getLang() {
   return 'ja';
 }
 
+function updateLangButtons() {
+  const cur = getLang();
+  document.querySelectorAll('.lang-switch [data-lang]').forEach(btn => {
+    const l = btn.getAttribute('data-lang');
+    btn.setAttribute('aria-pressed', String(l === cur));
+  });
+}
+
 function setLang(lang) {
   localStorage.setItem('site_lang', lang);
   document.documentElement.setAttribute('lang', lang);
+  updateLangButtons();
 }
 
 function getContentPath() {
@@ -397,6 +406,7 @@ function setupMenu() {
     const l = btn.getAttribute('data-lang');
     if (l) { setLang(l); loadContent(); }
   }));
+  updateLangButtons();
   setupMenu();
   loadContent();
   initStarfield();
