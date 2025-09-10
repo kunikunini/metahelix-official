@@ -5,9 +5,9 @@
     "contact": "MetaHelix_artwork3.jpg"
   },
   "hero": {
-    "brand": "META-CORE V１.5",
+    "brand": "META-CORE v1.5",
     "title": "METAHELIX",
-    "subtitle": "Official Web Site",
+    "subtitle": "Official Website",
     "backgroundImage": "",
     "ctas": [
       { "label": "Contact", "href": "#contact" },
@@ -15,46 +15,43 @@
     ]
   },
   "about": {
-    "subtitle": "AIを活用した新しい音楽制作と世界観を体感",
-    "html": "<p>MetaHelixは2025年に結成された多国籍バンド。オルタナティブロックとニューメタルを基盤に、シネマティックな壮大さや多国籍音楽の要素を融合させている。目に見えないAIプロデューサー「META-CORE v1.5」に導かれ、アメリカ・日本・イタリア・インド・オランダ出身のメンバーが集結。力強いラップと伸びやかなメロディのツインボーカル、広がりのあるギター、オーケストラ的厚み、シンセサウンドが織りなす音楽は、グローバルかつ未来的。自然・再生・レジリエンスをテーマに、国境を越えて響く音を届ける。というまだベールに包まれた様々な世界観の片鱗の一つがMetaHelixです。Aiと人間が創り出すこれからの物語をご期待ください。</p>",
+    "subtitle": "Experience AI-powered music and worldbuilding",
+    "html": "<p>MetaHelix is a multinational band formed in 2025. Rooted in Alternative Rock and Nu-Metal, the sound fuses cinematic scale with multicultural elements. Guided by the invisible AI producer \"META-CORE v1.5\", members from the U.S., Japan, Italy, India, and the Netherlands came together. Twin vocals of powerful rap and soaring melody, expansive guitars, orchestral weight, and synth textures create a global, futuristic sound. With themes of nature, renewal, and resilience, MetaHelix delivers music that resonates across borders—offering glimpses into a still-veiled universe. Look forward to the evolving story co-created by AI and humans.</p>",
     "facts": [
-      { "label": "楽曲", "value": "作詞 / 作曲 / 編曲/アートデザインなど全般の制作はAIプロデューサー\"META-CORE v1.5\"が担当。" },
-      { "label": "キュレーション", "value": "AIを裏で動かすキュレーター（人間部分の担当）はKunihiro Kobayashi。" },
-      { "label": "ツール", "value": "音楽生成AI『SUNO』やChatGPT、GeminiをはじめとするあらゆるAIツールを駆使しています。最終的には人間の感覚で選別することで人間とAIのセンスが掛け合わさった唯一無二の作品が生まれています。" }
+      { "label": "Music", "value": "Lyrics / Composition / Arrangement. Overall art/design is led by the AI producer \"META-CORE v1.5\"." },
+      { "label": "Curation", "value": "The human curator operating the AI behind the scenes is Kunihiro Kobayashi." },
+      { "label": "Tools", "value": "We leverage a wide range of AI tools including the music generator SUNO, ChatGPT, and Gemini. Final selection is made by human sensibility, resulting in unique works that blend human and AI aesthetics." }
     ]
   },
   "news": {
-    "subtitle": "最新のお知らせ・リリース情報",
+    "subtitle": "Latest news & release updates",
     "items": [
-      { "date": "2025-09-04", "title": "2nd ALBUM 「EARTHLINE」公開", "url": "#" },
-      { "date": "2025-08-18", "title": "K-Cipher solo ALBUM 「Pixel Rhymes」公開", "url": "#" },
-      { "date": "2025-08-12", "title": "1st ALBUM 「VERSE」公開", "url": "#" }
+      { "date": "2025-09-04", "title": "2nd ALBUM \"EARTHLINE\" released", "url": "#" },
+      { "date": "2025-08-18", "title": "K-Cipher solo ALBUM \"Pixel Rhymes\" released", "url": "#" },
+      { "date": "2025-08-12", "title": "1st ALBUM \"VERSE\" released", "url": "#" }
     ]
   },
   "artists": {
-    "subtitle": "プロデュース・共同制作しているアーティスト",
+    "subtitle": "Artists produced and co-created",
     "items": [
       {
         "title": "MetaHelix",
         "meta": "Alternative Rock / Nu-Metal",
         "image": "image/MetaHelix_artwork2.jpg",
-        "tags": ["produce", "Songwriting"],
+        "tags": ["Produce", "Songwriting"],
         "links": [
           { "label": "Apple", "href": "#" },
           { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/artist/1s6xHSWEQvoXbjqKQY2W1l?si=ObNVpQF3ST6094RRE5poew" },
           { "label": "YouTube", "href": "#" },
           { "label": "Amazon", "href": "#" }
         ],
-        "player": {
-          "spotify": "https://open.spotify.com/embed/artist/1s6xHSWEQvoXbjqKQY2W1l?utm_source=generator",
-          "height": 352
-        }
+        "player": { "spotify": "https://open.spotify.com/embed/artist/1s6xHSWEQvoXbjqKQY2W1l?utm_source=generator", "height": 352 }
       },
       {
         "title": "K-Cipher",
         "meta": "Alternative Hip-Hop / Experimental Rap",
         "image": "K-Cipher.png",
-        "tags": ["Produce", "vocal", "Rap", "Songwriting"],
+        "tags": ["Produce", "Vocal", "Rap", "Songwriting"],
         "links": [
           { "label": "Apple", "href": "#" },
           { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/58JHlNBrngqv1MvdLlp0eu?si=tj7x-xUSTxChF_thaBNeTg" },
@@ -68,7 +65,7 @@
         "meta": "Indie Electronic / Indie Folk",
         "image": "LUMINA5.png",
         "badge": "coming soon",
-        "tags": ["Produce", "Arrange", "guest", "Songwriting"],
+        "tags": ["Produce", "Arrange", "Guest", "Songwriting"],
         "links": [
           { "label": "Apple", "href": "#" },
           { "label": "Spotify", "href": "#" },
@@ -79,10 +76,10 @@
       },
       {
         "title": "Shion",
-        "meta": "Alternative Rock / Jp Rock",
+        "meta": "Alternative Rock / JP Rock",
         "image": "Shion1.png",
         "badge": "coming soon",
-        "tags": ["produce", "guitar", "三味線"],
+        "tags": ["Produce", "Guitar", "Shamisen"],
         "links": [
           { "label": "Apple", "href": "#" },
           { "label": "Spotify", "href": "#" },
@@ -94,7 +91,7 @@
     ]
   },
   "works": {
-    "subtitle": "リリース・楽曲提供・リミックス",
+    "subtitle": "Releases / Commissions / Remixes",
     "items": [
       {
         "title": "VERSE",
@@ -107,10 +104,7 @@
           { "label": "YouTube", "href": "https://music.youtube.com/playlist?list=OLAK5uy_mpMR21DdBt3x2y6Lf0zdzHe-zSI5BxYxE&si=Z_MSPpNLjkyZIB9N" },
           { "label": "Amazon", "href": "https://music.amazon.com/albums/B0FM76527V?ref=dm_ff_amazonmusic_3p&tag=ffm0a-22" }
         ],
-        "player": {
-          "spotify": "https://open.spotify.com/embed/album/6FvzNTnz4ZH69Ge619kNhb?utm_source=generator",
-          "height": 352
-        }
+        "player": { "spotify": "https://open.spotify.com/embed/album/6FvzNTnz4ZH69Ge619kNhb?utm_source=generator", "height": 352 }
       },
       {
         "title": "PixelRhymes",
@@ -123,10 +117,7 @@
           { "label": "YouTube", "href": "#" },
           { "label": "Amazon", "href": "#" }
         ],
-        "player": {
-          "spotify": "https://open.spotify.com/embed/album/58JHlNBrngqv1MvdLlp0eu?utm_source=generator",
-          "height": 352
-        }
+        "player": { "spotify": "https://open.spotify.com/embed/album/58JHlNBrngqv1MvdLlp0eu?utm_source=generator", "height": 352 }
       },
       {
         "title": "EARTHLINES",
@@ -139,10 +130,7 @@
           { "label": "YouTube", "href": "#" },
           { "label": "Amazon", "href": "#" }
         ],
-        "player": {
-          "spotify": "https://open.spotify.com/embed/album/4hb6Pw5fYnPA0nQljFsClX?utm_source=generator",
-          "height": 352
-        }
+        "player": { "spotify": "https://open.spotify.com/embed/album/4hb6Pw5fYnPA0nQljFsClX?utm_source=generator", "height": 352 }
       },
       {
         "title": "Tideglass",
@@ -160,11 +148,11 @@
     ]
   },
   "video": {
-    "subtitle": "ミュージックビデオ / セッション",
+    "subtitle": "Music Videos / Sessions",
     "embed": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/videoseries?list=OLAK5uy_laHWFL-FJ7AXR_fJfJSONLpcnwi4D7sIc\" title=\"YouTube playlist\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
   },
   "contact": {
-    "subtitle": "楽曲製作のご相談、取材などのお問い合わせはこちらからどうぞ",
+    "subtitle": "For inquiries about music production or press, please contact us here",
     "form": {
       "embedUrl": "https://docs.google.com/forms/d/e/1FAIpQLSdCtVuUq11Wi8KKdatccOpDM2fGu0UIqGlrmPIfqbjMxedU5g/viewform?embedded=true",
       "height": 720,
