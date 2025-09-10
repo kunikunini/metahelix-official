@@ -86,6 +86,9 @@ body::before {
   animation: bgOpacityPulse 12s ease-in-out infinite alternate;
 }
 
+/* Contact background: fit image without excessive crop */
+#contact.has-bg::before { background-size: contain, auto, auto; background-position: center; }
+
 /* Hero background: stronger presence + electric tint */
 .hero.has-bg::before {
   opacity: .5; /* 50% 指定 */

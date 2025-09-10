@@ -172,16 +172,9 @@ function renderCards(sectionId, data) {
   (data.items || []).forEach(item => {
     const card = createEl('article', { className: 'card' });
     const media = createEl('div', { className: 'card-media' });
-  if (item.image) {
-      const picture = createEl('picture');
-      const srcPath = normalizeImagePath(item.image);
-      const base = srcPath.replace(/^image\//, '').replace(/\.(png|jpe?g)$/i, '');
-      const webp = `image/optimized/${base}.webp`;
-      const source = createEl('source', { attrs: { srcset: webp, type: 'image/webp' } });
-      const img = createEl('img', { attrs: { src: srcPath, alt: item.title || 'thumbnail', loading: 'lazy', decoding: 'async' } });
-      picture.appendChild(source);
-      picture.appendChild(img);
-      media.appendChild(picture);
+    if (item.image) {
+      const img = createEl('img', { attrs: { src: normalizeImagePath(item.image), alt: item.title || 'thumbnail', loading: 'lazy', decoding: 'async' } });
+      media.appendChild(img);
     } else if (item.embed) {
       media.innerHTML = item.embed; // trusted input expected from local JSON
     } else {
@@ -268,6 +261,8 @@ function renderContact(contact) {
   const grid = document.querySelector('.contact-grid');
   // Google Form embed support
   if (contact.form && (contact.form.embed || contact.form.embedUrl)) {
+    // clear previous embed to avoid duplicates on reload
+    embedWrap.innerHTML = '';
     const iframe = document.createElement('iframe');
     iframe.src = contact.form.embedUrl || '';
     iframe.setAttribute('frameborder', '0');
