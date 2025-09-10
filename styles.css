@@ -328,7 +328,7 @@ a:hover { text-decoration: underline; }
   overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x proximity;
-  padding-bottom: 10px;
+  padding-bottom: 18px; /* leave room for custom scrollbar */
   position: relative;
 }
 .artists .card, .works .card { grid-column: auto !important; scroll-snap-align: start; }
@@ -346,11 +346,11 @@ a:hover { text-decoration: underline; }
 /* Custom functional horizontal scrollbar (overlay) */
 .hs-rail { position: absolute; left: 30px; right: 30px; bottom: 0; height: 10px; border-radius: 999px; background:
   linear-gradient(90deg, var(--accent-soft), var(--accent-2), var(--brand), var(--accent-2), var(--accent-soft));
-  background-size: 300% 100%; animation: slideGradient 12s linear infinite; box-shadow: inset 0 0 10px rgba(0,229,255,.18), inset 0 0 16px rgba(255,47,185,.14); opacity: .5;
+  background-size: 300% 100%; animation: slideRail 12s linear infinite; box-shadow: inset 0 0 10px rgba(0,229,255,.18), inset 0 0 16px rgba(255,47,185,.14); opacity: .4; z-index: 9;
 }
 .hs-thumb { position: absolute; bottom: 0; height: 10px; border-radius: 999px; cursor: pointer; background:
   linear-gradient(90deg, var(--brand), var(--accent-2), var(--accent-soft));
-  background-size: 300% 100%; animation: slideGradient 8s linear infinite; box-shadow: 0 0 12px var(--glow-c), 0 0 18px var(--glow-m); border: 2px solid rgba(4,18,24,.85);
+  background-size: 300% 100%; animation: slideRail 8s linear infinite; box-shadow: 0 0 12px var(--glow-c), 0 0 18px var(--glow-m); border: 2px solid rgba(4,18,24,.85); z-index: 10;
 }
 .hs-dragging .hs-thumb { filter: brightness(1.15) saturate(1.12); }
 .card { grid-column: span 4; background: rgba(12, 15, 21, 0.7); border: 1px solid rgba(0,229,255,0.22); border-radius: var(--radius); overflow: clip; position: relative; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
