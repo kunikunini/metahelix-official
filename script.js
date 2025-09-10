@@ -1,10 +1,24 @@
 // Content-driven site: loads from content.json
 
-const CONTENT_PATH = 'content.json';
+function getLang() {
+  const saved = localStorage.getItem('site_lang');
+  if (saved === 'en' || saved === 'ja') return saved;
+  return 'ja';
+}
+
+function setLang(lang) {
+  localStorage.setItem('site_lang', lang);
+  document.documentElement.setAttribute('lang', lang);
+}
+
+function getContentPath() {
+  const lang = getLang();
+  return lang === 'en' ? 'content.en.json' : 'content.json';
+}
 
 async function loadContent() {
   try {
-    const res = await fetch(CONTENT_PATH, { cache: 'no-store' });
+    const res = await fetch(getContentPath(), { cache: 'no-store' });
     if (!res.ok) throw new Error('Failed to load content.json');
     const data = await res.json();
     renderSite(data);
@@ -158,9 +172,16 @@ function renderCards(sectionId, data) {
   (data.items || []).forEach(item => {
     const card = createEl('article', { className: 'card' });
     const media = createEl('div', { className: 'card-media' });
-    if (item.image) {
-      const img = createEl('img', { attrs: { src: normalizeImagePath(item.image), alt: item.title || 'thumbnail' } });
-      media.appendChild(img);
+  if (item.image) {
+      const picture = createEl('picture');
+      const srcPath = normalizeImagePath(item.image);
+      const base = srcPath.replace(/^image\//, '').replace(/\.(png|jpe?g)$/i, '');
+      const webp = `image/optimized/${base}.webp`;
+      const source = createEl('source', { attrs: { srcset: webp, type: 'image/webp' } });
+      const img = createEl('img', { attrs: { src: srcPath, alt: item.title || 'thumbnail', loading: 'lazy', decoding: 'async' } });
+      picture.appendChild(source);
+      picture.appendChild(img);
+      media.appendChild(picture);
     } else if (item.embed) {
       media.innerHTML = item.embed; // trusted input expected from local JSON
     } else {
@@ -330,7 +351,14 @@ function setupMenu() {
   menu?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', () => {
+  // init language
+  setLang(getLang());
+  const langButtons = document.querySelectorAll('.lang-switch [data-lang]');
+  langButtons.forEach(btn => btn.addEventListener('click', () => {
+    const l = btn.getAttribute('data-lang');
+    if (l) { setLang(l); loadContent(); }
+  }));
   setupMenu();
   loadContent();
   initStarfield();

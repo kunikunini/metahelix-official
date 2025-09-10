@@ -156,6 +156,10 @@ a:hover { text-decoration: underline; }
 .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
 .brand { font-weight: 700; letter-spacing: .8px; color: var(--text); font-family: Oxanium, "Noto Sans JP", sans-serif; text-transform: uppercase; text-shadow: 0 0 14px var(--glow-c), 0 0 26px var(--glow-m); }
 
+.lang-switch { display: inline-flex; gap: 6px; margin-left: 16px; }
+.lang-switch button { background: rgba(255,255,255,0.06); color: var(--text); border: 1px solid rgba(255,255,255,0.18); border-radius: 999px; padding: 6px 10px; cursor: pointer; font-size: 12px; }
+.lang-switch button:hover { border-color: var(--brand); box-shadow: 0 0 0 4px var(--ring); }
+
 .nav-toggle { display: none; background: none; border: 0; width: 44px; height: 44px; position: relative; }
 .nav-toggle span { position: absolute; left: 10px; right: 10px; height: 2px; background: var(--text); border-radius: 2px; transition: .25s; }
 .nav-toggle span:nth-child(1){ top: 14px; }
