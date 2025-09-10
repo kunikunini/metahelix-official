@@ -173,10 +173,7 @@
   },
   "footer": {
     "copyright": "© <span data-year></span> MetaHelix — All rights reserved.",
-    "social": [
-      { "label": "YouTube", "href": "https://youtube.com/" },
-      { "label": "Spotify", "href": "https://spotify.com/" }
-    ]
+    "social": []
   },
   "hideSections": []
 }
