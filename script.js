@@ -397,6 +397,14 @@ function setupMenu() {
     btn.setAttribute('aria-expanded', String(open));
   });
   menu?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
+  // Brand link: always smooth-scroll to very top
+  const brand = document.querySelector('a.brand');
+  brand?.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // maintain #top in URL for consistency
+    try { history.replaceState(null, '', '#top'); } catch (_) {}
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
