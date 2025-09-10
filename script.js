@@ -428,9 +428,11 @@ function initCustomHScrollbars() {
     grid.appendChild(thumb);
     const update = () => {
       const max = grid.scrollWidth - grid.clientWidth;
+      const gutter = 30;
+      const inner = grid.clientWidth - 2 * gutter;
       const ratio = max > 0 ? grid.clientWidth / grid.scrollWidth : 1;
-      const width = Math.max(40, Math.floor((grid.clientWidth - 20) * ratio));
-      const left = max > 0 ? Math.floor((grid.scrollLeft / max) * (grid.clientWidth - 20 - width)) + 10 : 10;
+      const width = Math.max(40, Math.floor(inner * ratio));
+      const left = max > 0 ? Math.floor((grid.scrollLeft / max) * (inner - width)) + gutter : gutter;
       thumb.style.width = width + 'px';
       thumb.style.left = left + 'px';
     };
@@ -443,7 +445,8 @@ function initCustomHScrollbars() {
       dragging = true; grid.classList.add('hs-dragging');
       startX = e.clientX || (e.touches && e.touches[0]?.clientX) || 0;
       startLeft = parseFloat(getComputedStyle(thumb).left) || 0;
-      thumbW = thumb.offsetWidth; maxLeft = grid.clientWidth - 20 - thumbW + 10; maxScroll = grid.scrollWidth - grid.clientWidth;
+      const gutter = 30; const inner = grid.clientWidth - 2 * gutter;
+      thumbW = thumb.offsetWidth; maxLeft = gutter + (inner - thumbW); maxScroll = grid.scrollWidth - grid.clientWidth;
       e.preventDefault();
       document.addEventListener('mousemove', onMove);
       document.addEventListener('mouseup', onUp);
@@ -454,9 +457,10 @@ function initCustomHScrollbars() {
       if (!dragging) return;
       const x = e.clientX || (e.touches && e.touches[0]?.clientX) || 0;
       let nx = startLeft + (x - startX);
-      nx = Math.max(10, Math.min(maxLeft, nx));
+      const gutter = 30; const inner = grid.clientWidth - 2 * gutter;
+      nx = Math.max(gutter, Math.min(maxLeft, nx));
       thumb.style.left = nx + 'px';
-      const p = (nx - 10) / (maxLeft - 10 || 1);
+      const p = (nx - gutter) / ((inner - thumbW) || 1);
       grid.scrollLeft = p * maxScroll;
       e.preventDefault();
     };
