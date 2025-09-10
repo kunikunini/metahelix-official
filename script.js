@@ -263,6 +263,13 @@ function renderContact(contact) {
   if (contact.form && (contact.form.embed || contact.form.embedUrl)) {
     // clear previous embed to avoid duplicates on reload
     embedWrap.innerHTML = '';
+    // ensure split layout and left visual pane
+    grid && grid.classList.remove('single');
+    grid && grid.classList.add('split');
+    if (!document.querySelector('.contact-visual')) {
+      const visual = createEl('div', { className: 'contact-visual' });
+      grid.insertBefore(visual, embedWrap);
+    }
     // Build collapsible card
     embedWrap.classList.add('collapse-card');
     const head = createEl('button', { className: 'collapse-head' });
@@ -293,10 +300,12 @@ function renderContact(contact) {
         embedWrap.classList.add('open');
         head.setAttribute('aria-expanded', 'true');
         body.style.maxHeight = body.scrollHeight + 'px';
+        grid && grid.classList.add('expanded');
       } else {
         embedWrap.classList.remove('open');
         head.setAttribute('aria-expanded', 'false');
         body.style.maxHeight = '0px';
+        grid && grid.classList.remove('expanded');
       }
     };
     setOpen(false);
