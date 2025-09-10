@@ -379,6 +379,7 @@ function renderSite(data) {
   renderFooter(data.footer);
   applyDuoTitles();
   randomizeGradientPhases();
+  initCustomHScrollbars();
 
   // Hide disabled sections
   (data.hideSections || []).forEach(id => {
@@ -398,7 +399,7 @@ function setupMenu() {
   menu?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
 }
 
-  document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   // init language
   setLang(getLang());
   const langButtons = document.querySelectorAll('.lang-switch [data-lang]');
@@ -413,6 +414,71 @@ function setupMenu() {
   randomizeGradientPhases();
   initHeroGlitch();
 });
+
+function initCustomHScrollbars() {
+  const ids = ['artists-grid', 'works-grid'];
+  ids.forEach(id => {
+    const grid = document.getElementById(id);
+    if (!grid) return;
+    // remove old rails
+    grid.querySelectorAll('.hs-rail, .hs-thumb').forEach(n => n.remove());
+    const rail = createEl('div', { className: 'hs-rail' });
+    const thumb = createEl('div', { className: 'hs-thumb' });
+    grid.appendChild(rail);
+    grid.appendChild(thumb);
+    const update = () => {
+      const max = grid.scrollWidth - grid.clientWidth;
+      const ratio = max > 0 ? grid.clientWidth / grid.scrollWidth : 1;
+      const width = Math.max(40, Math.floor((grid.clientWidth - 20) * ratio));
+      const left = max > 0 ? Math.floor((grid.scrollLeft / max) * (grid.clientWidth - 20 - width)) + 10 : 10;
+      thumb.style.width = width + 'px';
+      thumb.style.left = left + 'px';
+    };
+    update();
+    grid.addEventListener('scroll', update);
+    window.addEventListener('resize', update);
+    // drag support
+    let dragging = false; let startX = 0; let startLeft = 0; let maxLeft = 0; let maxScroll = 0; let thumbW = 0;
+    const onDown = (e) => {
+      dragging = true; grid.classList.add('hs-dragging');
+      startX = e.clientX || (e.touches && e.touches[0]?.clientX) || 0;
+      startLeft = parseFloat(getComputedStyle(thumb).left) || 0;
+      thumbW = thumb.offsetWidth; maxLeft = grid.clientWidth - 20 - thumbW + 10; maxScroll = grid.scrollWidth - grid.clientWidth;
+      e.preventDefault();
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+      document.addEventListener('touchmove', onMove, { passive: false });
+      document.addEventListener('touchend', onUp);
+    };
+    const onMove = (e) => {
+      if (!dragging) return;
+      const x = e.clientX || (e.touches && e.touches[0]?.clientX) || 0;
+      let nx = startLeft + (x - startX);
+      nx = Math.max(10, Math.min(maxLeft, nx));
+      thumb.style.left = nx + 'px';
+      const p = (nx - 10) / (maxLeft - 10 || 1);
+      grid.scrollLeft = p * maxScroll;
+      e.preventDefault();
+    };
+    const onUp = () => {
+      dragging = false; grid.classList.remove('hs-dragging');
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+      document.removeEventListener('touchmove', onMove);
+      document.removeEventListener('touchend', onUp);
+    };
+    thumb.addEventListener('mousedown', onDown);
+    thumb.addEventListener('touchstart', onDown, { passive: false });
+    // click on rail to page scroll
+    rail.addEventListener('click', (e) => {
+      const rect = rail.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const page = grid.clientWidth * 0.8;
+      if (x < (parseFloat(getComputedStyle(thumb).left) - 10)) grid.scrollBy({ left: -page, behavior: 'smooth' });
+      else grid.scrollBy({ left: page, behavior: 'smooth' });
+    });
+  });
+}
 
 function applyDuoTitles() {
   const nodes = document.querySelectorAll('.section-title, .hero h1');
