@@ -263,6 +263,19 @@ function renderContact(contact) {
   if (contact.form && (contact.form.embed || contact.form.embedUrl)) {
     // clear previous embed to avoid duplicates on reload
     embedWrap.innerHTML = '';
+    // Build collapsible card
+    embedWrap.classList.add('collapse-card');
+    const head = createEl('button', { className: 'collapse-head' });
+    const title = (getLang() === 'en') ? 'Contact Form' : 'お問い合わせフォーム';
+    head.setAttribute('type', 'button');
+    head.setAttribute('aria-expanded', 'false');
+    const hid = 'contact-collapse-body';
+    head.setAttribute('aria-controls', hid);
+    head.appendChild(document.createTextNode(title));
+    const chev = createEl('span', { className: 'chev', attrs: { 'aria-hidden': 'true' } });
+    head.appendChild(chev);
+    const body = createEl('div', { className: 'collapse-body', attrs: { id: hid } });
+    const inner = createEl('div', { className: 'collapse-body-inner' });
     const iframe = document.createElement('iframe');
     iframe.src = contact.form.embedUrl || '';
     iframe.setAttribute('frameborder', '0');
@@ -270,13 +283,34 @@ function renderContact(contact) {
     iframe.setAttribute('marginwidth', '0');
     iframe.style.width = '100%';
     iframe.style.height = (contact.form.height || 760) + 'px';
-    embedWrap.appendChild(iframe);
+    inner.appendChild(iframe);
+    body.appendChild(inner);
+    embedWrap.appendChild(head);
+    embedWrap.appendChild(body);
+    // toggle behavior
+    const setOpen = (open) => {
+      if (open) {
+        embedWrap.classList.add('open');
+        head.setAttribute('aria-expanded', 'true');
+        body.style.maxHeight = body.scrollHeight + 'px';
+      } else {
+        embedWrap.classList.remove('open');
+        head.setAttribute('aria-expanded', 'false');
+        body.style.maxHeight = '0px';
+      }
+    };
+    setOpen(false);
+    head.addEventListener('click', () => {
+      const nowOpen = head.getAttribute('aria-expanded') !== 'true';
+      setOpen(nowOpen);
+    });
     // allow fine-tuned width via content.json (e.g., 640, '720px')
     if (contact.form.width) {
       const w = typeof contact.form.width === 'number' ? contact.form.width + 'px' : String(contact.form.width);
-      embedWrap.style.maxWidth = w;
-      embedWrap.style.marginInline = 'auto';
-      embedWrap.style.width = '100%';
+      // center the inner body content only
+      inner.style.maxWidth = w;
+      inner.style.marginInline = 'auto';
+      inner.style.width = '100%';
     }
     // hide demo form
     form.classList.add('hide');

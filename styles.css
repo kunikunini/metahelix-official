@@ -380,6 +380,14 @@ a:hover { text-decoration: underline; }
 .contact-form { background: rgba(12, 15, 21, 0.7); border: 1px solid rgba(0,229,255,0.22); border-radius: var(--radius); padding: 16px; box-shadow: 0 0 24px rgba(0,229,255,.12); }
 .contact-embed { background: rgba(12, 15, 21, 0.7); border: 1px solid rgba(0,229,255,0.22); border-radius: var(--radius); overflow: hidden; box-shadow: 0 0 24px rgba(0,229,255,.12); padding: 0; display: block; width: 100%; max-width: none; margin-inline: 0; }
 .contact-embed iframe { display: block; width: 100%; border: 0; }
+
+/* Collapsible contact form card */
+.contact-embed.collapse-card { padding: 0; overflow: visible; }
+.collapse-head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px; background: rgba(0,229,255,0.06); border-bottom: 1px solid rgba(0,229,255,0.22); cursor: pointer; color: var(--text); font-weight: 700; letter-spacing: .5px; text-transform: uppercase; }
+.collapse-head .chev { width: 10px; height: 10px; border-right: 2px solid var(--text); border-bottom: 2px solid var(--text); transform: rotate(-45deg); transition: transform .25s ease; opacity: .8; }
+.collapse-card.open .collapse-head .chev { transform: rotate(45deg); }
+.collapse-body { overflow: hidden; max-height: 0; transition: max-height .35s ease; }
+.collapse-body-inner { padding: 0; }
 .form-row { display: grid; gap: 6px; margin-bottom: 12px; }
 label { color: var(--muted); font-size: 13px; }
 input, textarea { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); color: var(--text); padding: 10px 12px; border-radius: 10px; outline: none; }
