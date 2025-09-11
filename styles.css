@@ -453,8 +453,16 @@ input:focus, textarea:focus { border-color: var(--brand); box-shadow: 0 0 0 6px 
 
 /* Hero platform logos */
 .platform-logos { margin-top: 14px; display: flex; gap: 18px; justify-content: center; align-items: center; flex-wrap: wrap; }
-.platform-logos a { display: inline-flex; align-items: center; justify-content: center; padding: 8px 10px; border-radius: 10px; background: rgba(0,0,0,0.18); border: 1px solid rgba(255,255,255,0.08); }
-.platform-logos img { height: 24px; display: block; filter: drop-shadow(0 0 6px rgba(0,229,255,.2)); }
+/* Uniform icon hit-area */
+.platform-logos a { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border-radius: 12px; background: transparent; border: 0; }
+/* Icon: unify visual size with padded white background */
+.platform-logos img {
+  width: 28px; height: 28px; object-fit: contain; display: block;
+  padding: 6px; border-radius: 8px;
+  background: #fff; /* fully opaque for maximum contrast */
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.55), 0 0 6px rgba(0,229,255,.18);
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,.35)) drop-shadow(0 1px 2px rgba(0,0,0,.25));
+}
 
 
 /* Utilities */
