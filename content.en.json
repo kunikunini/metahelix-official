@@ -40,10 +40,10 @@
         "image": "image/MetaHelix_artwork2.jpg",
         "tags": ["Produce", "Songwriting"],
         "links": [
-          { "label": "Apple", "href": "#" },
-          { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/artist/1s6xHSWEQvoXbjqKQY2W1l?si=ObNVpQF3ST6094RRE5poew" },
-          { "label": "YouTube", "href": "#" },
-          { "label": "Amazon", "href": "#" }
+          { "label": "Apple", "href": "https://music.apple.com/jp/artist/metahelix/1833310395" },
+          { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/artist/1s6xHSWEQvoXbjqKQY2W1l?si=D2qFwK5pSICKx62byhXBog" },
+          { "label": "YouTube", "href": "https://music.youtube.com/channel/UCtxG7FYrYbbpxIPoJjtUvwA?si=oZRHljQEcKrVa74F" },
+          { "label": "Amazon", "href": "https://music.amazon.co.jp/artists/B0FM76695K?ref=dm_sh_uVA2HnlCy11ksqCpQDHUEMQaf" }
         ],
         "player": { "spotify": "https://open.spotify.com/embed/artist/1s6xHSWEQvoXbjqKQY2W1l?utm_source=generator", "height": 352 }
       },
@@ -53,10 +53,10 @@
         "image": "K-Cipher.png",
         "tags": ["Produce", "Vocal", "Rap", "Songwriting"],
         "links": [
-          { "label": "Apple", "href": "#" },
-          { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/58JHlNBrngqv1MvdLlp0eu?si=tj7x-xUSTxChF_thaBNeTg" },
-          { "label": "YouTube", "href": "#" },
-          { "label": "Amazon", "href": "#" }
+          { "label": "Apple", "href": "https://music.apple.com/au/artist/k-cipher/1833494587" },
+          { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/58JHlNBrngqv1MvdLlp0eu?si=D2qFwK5pSICKx62byhXBog" },
+          { "label": "YouTube", "href": "https://music.youtube.com/playlist?list=OLAK5uy_lqrSmdarUV-gAxe4rAEDSOqVsGj_Ojs3w" },
+          { "label": "Amazon", "href": "https://music.amazon.com/artists/B0FMDW119M/k-cipher?marketplaceId=A1VC38T7YXB528&musicTerritory=JP&ref=dm_sh_el3KaBAIF5mKAVLvPg1MotGa9" }
         ],
         "player": { "spotify": "https://open.spotify.com/embed/artist/6eLNY6hSGR8JT5eVN6nYJ6?utm_source=generator", "height": 352 }
       },
@@ -100,7 +100,7 @@
         "tags": ["Album"],
         "links": [
           { "label": "Apple", "href": "https://music.apple.com/jp/album/verse/1833311254" },
-          { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/6FvzNTnz4ZH69Ge619kNhb?si=PUDoulgNQVyAAvpi8WoLTg" },
+          { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/6FvzNTnz4ZH69Ge619kNhb?si=D2qFwK5pSICKx62byhXBog" },
           { "label": "YouTube", "href": "https://music.youtube.com/playlist?list=OLAK5uy_mpMR21DdBt3x2y6Lf0zdzHe-zSI5BxYxE&si=Z_MSPpNLjkyZIB9N" },
           { "label": "Amazon", "href": "https://music.amazon.com/albums/B0FM76527V?ref=dm_ff_amazonmusic_3p&tag=ffm0a-22" }
         ],
@@ -112,10 +112,10 @@
         "image": "PixelRhymes_artwork.png",
         "tags": ["Album"],
         "links": [
-          { "label": "Apple", "href": "#" },
-          { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/58JHlNBrngqv1MvdLlp0eu?si=tj7x-xUSTxChF_thaBNeTg" },
-          { "label": "YouTube", "href": "#" },
-          { "label": "Amazon", "href": "#" }
+          { "label": "Apple", "href": "https://music.apple.com/jp/album/pixel-rhymes/1833495444" },
+          { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/58JHlNBrngqv1MvdLlp0eu?si=D2qFwK5pSICKx62byhXBog" },
+          { "label": "YouTube", "href": "https://music.youtube.com/playlist?list=OLAK5uy_lqrSmdarUV-gAxe4rAEDSOqVsGj_Ojs3w&si=bFpN2oXNonfBJz97" },
+          { "label": "Amazon", "href": "https://music.amazon.co.jp/albums/B0FMDJXXQS?ref=dm_sh_wYoiUw5PvIOr9gbXuU4uMTKlg" }
         ],
         "player": { "spotify": "https://open.spotify.com/embed/album/58JHlNBrngqv1MvdLlp0eu?utm_source=generator", "height": 352 }
       },
@@ -125,10 +125,10 @@
         "image": "EARTHLINES_artwork.png",
         "tags": ["Album"],
         "links": [
-          { "label": "Apple", "href": "#" },
-          { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/4hb6Pw5fYnPA0nQljFsClX?si=3vak7DE_SVqz3jMe8q_mJg" },
-          { "label": "YouTube", "href": "#" },
-          { "label": "Amazon", "href": "#" }
+          { "label": "Apple", "href": "https://music.apple.com/jp/album/earthlines/1836922234" },
+          { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/4hb6Pw5fYnPA0nQljFsClX?si=D2qFwK5pSICKx62byhXBog" },
+          { "label": "YouTube", "href": "https://music.youtube.com/playlist?list=OLAK5uy_lNcFFM6pLotzobVCBY5B6tTz2oZ-yxo2M&si=fU0Cri5LewOnZ0K6" },
+          { "label": "Amazon", "href": "https://music.amazon.com/albums/B0FP532NH2?marketplaceId=A1VC38T7YXB528&musicTerritory=JP&ref=dm_sh_zhvgLVIlnpkseL495TT2YBute" }
         ],
         "player": { "spotify": "https://open.spotify.com/embed/album/4hb6Pw5fYnPA0nQljFsClX?utm_source=generator", "height": 352 }
       },
@@ -164,7 +164,7 @@
     "social": [
       { "label": "Instagram", "href": "https://instagram.com/" },
       { "label": "YouTube", "href": "https://youtube.com/" },
-      { "label": "Spotify", "href": "https://spotify.com/" }
+      { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/artist/1s6xHSWEQvoXbjqKQY2W1l?si=D2qFwK5pSICKx62byhXBog" }
     ]
   },
   "hideSections": []
