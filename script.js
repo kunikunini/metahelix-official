@@ -300,9 +300,6 @@ function renderContact(contact) {
     inner.appendChild(iframe);
     body.appendChild(inner);
     embedWrap.appendChild(head);
-    // decorative background under the toggle head
-    const decoBg = createEl('div', { className: 'contact-bg' });
-    embedWrap.appendChild(decoBg);
     embedWrap.appendChild(body);
     // toggle behavior
     const setOpen = (open) => {
