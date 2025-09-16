@@ -272,13 +272,11 @@ function renderContact(contact) {
   if (contact.form && (contact.form.embed || contact.form.embedUrl)) {
     // clear previous embed to avoid duplicates on reload
     embedWrap.innerHTML = '';
-    // ensure split layout and left visual pane
-    grid && grid.classList.remove('single');
-    grid && grid.classList.add('split');
-    if (!document.querySelector('.contact-visual')) {
-      const visual = createEl('div', { className: 'contact-visual' });
-      grid.insertBefore(visual, embedWrap);
-    }
+    // ensure single-column layout and remove any left visual pane
+    grid && grid.classList.remove('split');
+    grid && grid.classList.add('single');
+    // remove pre-existing visual pane if present
+    document.querySelectorAll('.contact-visual').forEach(v => v.remove());
     // Build collapsible card
     embedWrap.classList.add('collapse-card');
     const head = createEl('button', { className: 'collapse-head' });
@@ -302,6 +300,9 @@ function renderContact(contact) {
     inner.appendChild(iframe);
     body.appendChild(inner);
     embedWrap.appendChild(head);
+    // decorative background under the toggle head
+    const decoBg = createEl('div', { className: 'contact-bg' });
+    embedWrap.appendChild(decoBg);
     embedWrap.appendChild(body);
     // toggle behavior
     const setOpen = (open) => {
@@ -332,7 +333,7 @@ function renderContact(contact) {
     }
     // hide demo form
     form.classList.add('hide');
-    // layout: single column when embedding external form
+    // layout: single column when embedding external form (centered via CSS)
     grid && grid.classList.add('single');
     // hide empty actions panel to avoid left blank space
     if (!actions.children.length) actions.classList.add('hide');
