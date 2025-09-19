@@ -90,6 +90,20 @@
           { "label": "Amazon", "href": "#" }
         ],
         "player": { "spotify": "", "height": 152 }
+      },
+      {
+        "title": "Auri‑Nova",
+        "meta": "Future Bass / Alt-Pop",
+        "image": "Auri‑Nova.png",
+        "badge": "coming soon",
+        "tags": ["Produce", "Vocal", "Songwriting"],
+        "links": [
+          { "label": "Apple", "href": "#" },
+          { "label": "Spotify", "href": "#" },
+          { "label": "YouTube", "href": "#" },
+          { "label": "Amazon", "href": "#" }
+        ],
+        "player": { "spotify": "", "height": 152 }
       }
     ]
   },
