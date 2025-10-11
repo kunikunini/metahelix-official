@@ -11,7 +11,8 @@
     "backgroundImage": "",
     "ctas": [
       { "label": "Contact", "href": "#contact" },
-      { "label": "Latest Works", "href": "#works", "variant": "secondary" }
+      { "label": "ALBUMS", "href": "#works" },
+      { "label": "ARTISTS", "href": "#artists" }
     ]
   },
   "about": {
@@ -26,6 +27,7 @@
   "news": {
     "subtitle": "Latest news & release updates",
     "items": [
+      { "date": "2025-10-14", "title": "LUMINA 1st ALBUM \"Tideglass\" released", "url": "#" },
       { "date": "2025-09-04", "title": "2nd ALBUM \"EARTHLINE\" released", "url": "#" },
       { "date": "2025-08-18", "title": "K-Cipher solo ALBUM \"Pixel Rhymes\" released", "url": "#" },
       { "date": "2025-08-12", "title": "1st ALBUM \"VERSE\" released", "url": "#" }
