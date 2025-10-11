@@ -189,7 +189,10 @@
   },
   "footer": {
     "copyright": "© <span data-year></span> MetaHelix — All rights reserved.",
-    "social": []
+    "social": [
+      { "label": "Instagram", "href": "https://www.instagram.com/metahelix_official?igsh=MXJ0d291ajZncmV1dw%3D%3D&utm_source=qr" },
+      { "label": "TikTok", "href": "https://www.tiktok.com/@metahlacymj?_t=ZS-90SmH9wKisk&_r=1" }
+    ]
   },
   "hideSections": []
 }

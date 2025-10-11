@@ -353,13 +353,53 @@ function renderFooter(footer) {
     const cr = document.getElementById('copyright');
     cr.innerHTML = footer.copyright;
   }
+  // Footer: append social icons next to other platform buttons
+  const footerLogos = document.querySelector('.site-footer .platform-logos');
+  if (footerLogos) {
+    // remove any previously injected social anchors (data-social)
+    footerLogos.querySelectorAll('a[data-social]')?.forEach(a => a.remove());
+    (footer?.social || []).forEach(s => {
+      const label = (s.label || '').toLowerCase();
+      const map = { instagram: 'image/instagram_logo.png', tiktok: 'image/TikTok_logo.png' };
+      const icon = map[label];
+      const attrs = { href: s.href || '#', target: '_blank', rel: 'noopener', 'aria-label': s.label || '', 'data-label': s.label || '', 'data-social': '1', class: 'btn secondary' };
+      const a = createEl('a', { attrs });
+      if (icon) {
+        const img = document.createElement('img');
+        img.src = normalizeImagePath(icon);
+        img.alt = s.label || '';
+        a.appendChild(img);
+      } else {
+        a.textContent = s.label || '';
+      }
+      footerLogos.appendChild(a);
+    });
+  }
+  // Header side (hero area): place above subtitle
+  const heroSocial = document.getElementById('social-logos-hero');
+  if (heroSocial) {
+    heroSocial.innerHTML = '';
+    (footer?.social || []).forEach(s => {
+      const label = (s.label || '').toLowerCase();
+      const map = { instagram: 'image/instagram_logo.png', tiktok: 'image/TikTok_logo.png' };
+      const icon = map[label];
+      const attrs = { href: s.href || '#', target: '_blank', rel: 'noopener', 'aria-label': s.label || '', 'data-label': s.label || '', class: 'btn secondary' };
+      const a = createEl('a', { attrs });
+      if (icon) {
+        const img = document.createElement('img');
+        img.src = normalizeImagePath(icon);
+        img.alt = s.label || '';
+        a.appendChild(img);
+      } else {
+        a.textContent = s.label || '';
+      }
+      heroSocial.appendChild(a);
+    });
+  }
+
+  // Legacy list (no longer used): clear if present
   const ul = document.getElementById('social-links');
-  ul.innerHTML = '';
-  (footer?.social || []).forEach(s => {
-    const li = document.createElement('li');
-    const a = createEl('a', { text: s.label || '', attrs: { href: s.href || '#', target: '_blank', rel: 'noopener' } });
-    li.appendChild(a); ul.appendChild(li);
-  });
+  if (ul) ul.innerHTML = '';
 }
 
 function renderSite(data) {
@@ -375,6 +415,8 @@ function renderSite(data) {
   renderVideo(data.video);
   renderContact(data.contact);
   renderFooter(data.footer);
+  initIconMagnetism();
+  initSubtitleGlitch();
   applyDuoTitles();
   randomizeGradientPhases();
   initCustomHScrollbars();
@@ -491,7 +533,7 @@ function initCustomHScrollbars() {
 }
 
 function applyDuoTitles() {
-  const nodes = document.querySelectorAll('.section-title, .hero h1');
+  const nodes = document.querySelectorAll('.section-title, .hero h1, #hero-subtitle');
   nodes.forEach(el => {
     let t = (el.textContent || '').trim();
     if (el.matches('.hero h1')) {
@@ -526,6 +568,59 @@ function initHeroGlitch() {
   // immediate first burst after short delay so変化が分かりやすい
   setTimeout(burst, 400);
   setInterval(burst, 2000);
+}
+
+function initSubtitleGlitch() {
+  const el = document.getElementById('hero-subtitle');
+  if (!el || el.dataset.glitchBound === '1') return;
+  el.dataset.glitchBound = '1';
+  const t = (el.textContent || '').trim();
+  if (!el.getAttribute('data-text')) el.setAttribute('data-text', t);
+  const burst = () => {
+    el.classList.add('glitch');
+    setTimeout(() => el.classList.remove('glitch'), 420);
+  };
+  // 初回は少し遅らせて実行、その後3秒周期
+  setTimeout(burst, 600);
+  setInterval(burst, 3000);
+}
+
+// Subtle magnetic hover for platform icons (header + footer)
+function initIconMagnetism() {
+  const containers = document.querySelectorAll('.platform-logos');
+  containers.forEach(container => {
+    if (container.dataset.magnetBound === '1') return;
+    container.dataset.magnetBound = '1';
+    const THRESH = 160;
+    const MAX_SHIFT = 10;
+    const onMove = (e) => {
+      const x = e.clientX, y = e.clientY;
+      container.querySelectorAll('a').forEach(a => {
+        const r = a.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dx = x - cx;
+        const dy = y - cy;
+        const dist = Math.hypot(dx, dy);
+        const ratio = Math.max(0, 1 - dist / THRESH);
+        const tx = (dx / THRESH) * MAX_SHIFT * ratio;
+        const ty = (dy / THRESH) * MAX_SHIFT * ratio;
+        a.style.transform = `translate(${tx}px, ${ty}px)`;
+        const img = a.querySelector('img');
+        if (img) img.style.opacity = (0.72 + 0.28 * ratio).toFixed(2);
+      });
+    };
+    const onLeave = () => {
+      container.querySelectorAll('a').forEach(a => {
+        a.style.transform = '';
+        const img = a.querySelector('img');
+        if (img) img.style.opacity = '';
+      });
+    };
+    container.addEventListener('mousemove', onMove);
+    container.addEventListener('mouseleave', onLeave);
+    container.addEventListener('touchend', onLeave, { passive: true });
+  });
 }
 
 // Twinkling starfield
