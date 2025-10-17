@@ -69,15 +69,14 @@
         "title": "LUMINA",
         "meta": "Indie Electronic / Indie Folk",
         "image": "LUMINA5.png",
-        "badge": "coming soon",
         "tags": ["Produce", "Arrange", "guest", "Songwriting"],
         "links": [
           { "label": "Apple", "href": "#" },
-          { "label": "Spotify", "href": "#" },
+          { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/3KA3OhHLETLYFEJZlgDZOo?si=gQQmcIjVReWB0n1tj8WKrg" },
           { "label": "YouTube", "href": "#" },
-          { "label": "Amazon", "href": "#" }
+          { "label": "Amazon", "href": "https://music.amazon.co.jp/albums/B0FWQP9Y9H" }
         ],
-        "player": { "spotify": "", "height": 152 }
+        "player": { "spotify": "https://open.spotify.com/embed/album/3KA3OhHLETLYFEJZlgDZOo?utm_source=generator", "height": 352 }
       },
       {
         "title": "Shion",
@@ -162,16 +161,19 @@
       },
       {
         "title": "Tideglass",
-        "meta": "Album / TBA",
+        "meta": "Album / 2025",
         "image": "Tideglass_artwork.png",
-        "badge": "coming soon",
         "tags": ["Album"],
         "links": [
           { "label": "Apple", "href": "#" },
-          { "label": "Spotify", "href": "#" },
+          { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/3KA3OhHLETLYFEJZlgDZOo?si=gQQmcIjVReWB0n1tj8WKrg" },
           { "label": "YouTube", "href": "#" },
-          { "label": "Amazon", "href": "#" }
-        ]
+          { "label": "Amazon", "href": "https://music.amazon.co.jp/albums/B0FWQP9Y9H" }
+        ],
+        "player": {
+          "spotify": "https://open.spotify.com/embed/album/3KA3OhHLETLYFEJZlgDZOo?utm_source=generator",
+          "height": 352
+        }
       }
     ]
   },
