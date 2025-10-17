@@ -79,7 +79,7 @@
         "player": { "spotify": "https://open.spotify.com/embed/album/3KA3OhHLETLYFEJZlgDZOo?utm_source=generator", "height": 352 }
       },
       {
-        "title": "Shion",
+        "title": "SHION",
         "meta": "Alternative Rock / Jp Rock",
         "image": "Shion1.png",
         "badge": "coming soon",
@@ -115,7 +115,7 @@
         "title": "VERSE",
         "meta": "Album / 2025",
         "image": "VERSE_artwork.png",
-        "tags": ["Album"],
+        "tags": ["Album", "MetaHelix"],
         "links": [
           { "label": "Apple", "href": "https://music.apple.com/jp/album/verse/1833311254" },
           { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/6FvzNTnz4ZH69Ge619kNhb?si=D2qFwK5pSICKx62byhXBog" },
@@ -131,7 +131,7 @@
         "title": "PixelRhymes",
         "meta": "Album / 2025",
         "image": "PixelRhymes_artwork.png",
-        "tags": ["Album"],
+        "tags": ["Album", "K-Cipher"],
         "links": [
           { "label": "Apple", "href": "https://music.apple.com/jp/album/pixel-rhymes/1833495444" },
           { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/58JHlNBrngqv1MvdLlp0eu?si=D2qFwK5pSICKx62byhXBog" },
@@ -147,7 +147,7 @@
         "title": "EARTHLINES",
         "meta": "Album / 2025",
         "image": "EARTHLINES_artwork.png",
-        "tags": ["Album"],
+        "tags": ["Album", "MetaHelix"],
         "links": [
           { "label": "Apple", "href": "https://music.apple.com/jp/album/earthlines/1836922234" },
           { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/4hb6Pw5fYnPA0nQljFsClX?si=D2qFwK5pSICKx62byhXBog" },
@@ -163,7 +163,7 @@
         "title": "Tideglass",
         "meta": "Album / 2025",
         "image": "Tideglass_artwork.png",
-        "tags": ["Album"],
+        "tags": ["Album", "LUMINA"],
         "links": [
           { "label": "Apple", "href": "#" },
           { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/3KA3OhHLETLYFEJZlgDZOo?si=gQQmcIjVReWB0n1tj8WKrg" },
@@ -174,6 +174,19 @@
           "spotify": "https://open.spotify.com/embed/album/3KA3OhHLETLYFEJZlgDZOo?utm_source=generator",
           "height": 352
         }
+      },
+      {
+        "title": "Love Chronicle -toki no kioku-",
+        "meta": "Album / coming soon",
+        "image": "Love Chronicle アートワーク.png",
+        "tags": ["Album", "SHION"],
+        "badge": "coming soon",
+        "links": [
+          { "label": "Apple", "href": "#" },
+          { "label": "Spotify", "href": "#" },
+          { "label": "YouTube", "href": "#" },
+          { "label": "Amazon", "href": "#" }
+        ]
       }
     ]
   },
