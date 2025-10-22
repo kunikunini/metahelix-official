@@ -68,7 +68,7 @@
         "image": "LUMINA5.png",
         "tags": ["Produce", "Arrange", "Guest", "Songwriting"],
         "links": [
-          { "label": "Apple", "href": "#" },
+          { "label": "Apple", "href": "https://music.apple.com/jp/artist/lumina/1477370956" },
           { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/3KA3OhHLETLYFEJZlgDZOo?si=gQQmcIjVReWB0n1tj8WKrg" },
           { "label": "YouTube", "href": "#" },
           { "label": "Amazon", "href": "https://music.amazon.co.jp/albums/B0FWQP9Y9H" }
@@ -139,7 +139,7 @@
         "image": "Tideglass_artwork.png",
         "tags": ["Album", "LUMINA"],
         "links": [
-          { "label": "Apple", "href": "#" },
+          { "label": "Apple", "href": "https://music.apple.com/jp/album/tideglass/1847389623" },
           { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/3KA3OhHLETLYFEJZlgDZOo?si=gQQmcIjVReWB0n1tj8WKrg" },
           { "label": "YouTube", "href": "#" },
           { "label": "Amazon", "href": "https://music.amazon.co.jp/albums/B0FWQP9Y9H" }
