@@ -27,19 +27,35 @@
   "news": {
     "subtitle": "最新のお知らせ・リリース情報",
     "items": [
-      { "date": "2025-10-14", "title": "LUMINA 1st ALBUM 「Tideglass」公開", "url": "#" },
-      { "date": "2025-09-04", "title": "2nd ALBUM 「EARTHLINE」公開", "url": "#" },
-      { "date": "2025-08-18", "title": "K-Cipher solo ALBUM 「Pixel Rhymes」公開", "url": "#" },
-      { "date": "2025-08-12", "title": "1st ALBUM 「VERSE」公開", "url": "#" }
+      { "date": "2025-11-20", "title": "SHION 1st ALBUM 「Love Chronicle -toki no kioku-」リリース", "url": "#works" },
+      { "date": "2025-10-14", "title": "LUMINA 1st ALBUM 「Tideglass」リリース", "url": "#" },
+      { "date": "2025-09-04", "title": "2nd ALBUM 「EARTHLINE」リリース", "url": "#" },
+      { "date": "2025-08-18", "title": "K-Cipher solo ALBUM 「Pixel Rhymes」リリース", "url": "#" },
+      { "date": "2025-08-12", "title": "1st ALBUM 「VERSE」リリース", "url": "#" }
     ]
   },
   "artists": {
     "subtitle": "プロデュース・共同制作しているアーティスト",
     "items": [
       {
+        "title": "LUMINA",
+        "meta": "Indie Electronic / Indie Folk",
+        "image": "LUMINA5.png",
+        "date": "2025-10-14",
+        "tags": ["Produce", "Arrange", "guest", "Songwriting"],
+        "links": [
+          { "label": "Apple", "href": "https://music.apple.com/jp/artist/lumina/1477370956" },
+          { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/3KA3OhHLETLYFEJZlgDZOo?si=gQQmcIjVReWB0n1tj8WKrg" },
+          { "label": "YouTube", "href": "#" },
+          { "label": "Amazon", "href": "https://music.amazon.co.jp/albums/B0FWQP9Y9H" }
+        ],
+        "player": { "spotify": "https://open.spotify.com/embed/album/3KA3OhHLETLYFEJZlgDZOo?utm_source=generator", "height": 352 }
+      },
+      {
         "title": "MetaHelix",
         "meta": "Alternative Rock / Nu-Metal",
         "image": "image/MetaHelix_artwork2.jpg",
+        "date": "2025-09-04",
         "tags": ["produce", "Songwriting"],
         "links": [
           { "label": "Apple", "href": "https://music.apple.com/jp/artist/metahelix/1833310395" },
@@ -56,6 +72,7 @@
         "title": "K-Cipher",
         "meta": "Alternative Hip-Hop / Experimental Rap",
         "image": "K-Cipher.png",
+        "date": "2025-08-18",
         "tags": ["Produce", "vocal", "Rap", "Songwriting"],
         "links": [
           { "label": "Apple", "href": "https://music.apple.com/au/artist/k-cipher/1833494587" },
@@ -66,31 +83,34 @@
         "player": { "spotify": "https://open.spotify.com/embed/artist/6eLNY6hSGR8JT5eVN6nYJ6?utm_source=generator", "height": 352 }
       },
       {
-        "title": "LUMINA",
-        "meta": "Indie Electronic / Indie Folk",
-        "image": "LUMINA5.png",
-        "tags": ["Produce", "Arrange", "guest", "Songwriting"],
-        "links": [
-          { "label": "Apple", "href": "https://music.apple.com/jp/artist/lumina/1477370956" },
-          { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/3KA3OhHLETLYFEJZlgDZOo?si=gQQmcIjVReWB0n1tj8WKrg" },
-          { "label": "YouTube", "href": "#" },
-          { "label": "Amazon", "href": "https://music.amazon.co.jp/albums/B0FWQP9Y9H" }
-        ],
-        "player": { "spotify": "https://open.spotify.com/embed/album/3KA3OhHLETLYFEJZlgDZOo?utm_source=generator", "height": 352 }
-      },
-      {
         "title": "SHION",
         "meta": "Alternative Rock / Jp Rock",
-        "image": "Shion1.png",
-        "badge": "coming soon",
+        "image": "SHION3.png",
+        "date": "2025-11-20",
         "tags": ["produce", "guitar", "三味線"],
+        "links": [
+          { "label": "Apple", "href": "https://music.apple.com/jp/album/love-chronicle-toki-no-kioku/1853854577" },
+          { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/artist/0vnLVIhFdk3Qt9ylMlPOYP?si=1qNxjUiJRTK7UIKUd5l6og" },
+          { "label": "YouTube", "href": "https://music.youtube.com/playlist?list=OLAK5uy_nJTWbZZGsZVLoOSL_Gw9yJUudfx0wx_fw&si=zmIq8zWdk95udZWt" },
+          { "label": "Amazon", "href": "https://music.amazon.co.jp/albums/B0G2C8XV63?ref=dm_sh_5YplbpEIDdBQSfJ27JvW0byzf" }
+        ],
+        "player": {
+          "spotify": "https://open.spotify.com/embed/album/7HiTiwCW68DXyXqMitkn3u?utm_source=generator",
+          "height": 352
+        }
+      },
+      {
+        "title": "輪猫（Rin-neko)",
+        "meta": "VOCALOID / Jpop",
+        "image": "Rin-neko.png",
+        "badge": "coming soon",
+        "tags": ["VOCALOID", "Jpop", "produce", "song writing"],
         "links": [
           { "label": "Apple", "href": "#" },
           { "label": "Spotify", "href": "#" },
           { "label": "YouTube", "href": "#" },
           { "label": "Amazon", "href": "#" }
-        ],
-        "player": { "spotify": "", "height": 152 }
+        ]
       },
       {
         "title": "Auri‑Nova",
@@ -112,57 +132,10 @@
     "subtitle": "リリース・楽曲提供・リミックス",
     "items": [
       {
-        "title": "VERSE",
-        "meta": "Album / 2025",
-        "image": "VERSE_artwork.png",
-        "tags": ["Album", "MetaHelix"],
-        "links": [
-          { "label": "Apple", "href": "https://music.apple.com/jp/album/verse/1833311254" },
-          { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/6FvzNTnz4ZH69Ge619kNhb?si=D2qFwK5pSICKx62byhXBog" },
-          { "label": "YouTube", "href": "https://music.youtube.com/playlist?list=OLAK5uy_mpMR21DdBt3x2y6Lf0zdzHe-zSI5BxYxE&si=Z_MSPpNLjkyZIB9N" },
-          { "label": "Amazon", "href": "https://music.amazon.com/albums/B0FM76527V?ref=dm_ff_amazonmusic_3p&tag=ffm0a-22" }
-        ],
-        "player": {
-          "spotify": "https://open.spotify.com/embed/album/6FvzNTnz4ZH69Ge619kNhb?utm_source=generator",
-          "height": 352
-        }
-      },
-      {
-        "title": "PixelRhymes",
-        "meta": "Album / 2025",
-        "image": "PixelRhymes_artwork.png",
-        "tags": ["Album", "K-Cipher"],
-        "links": [
-          { "label": "Apple", "href": "https://music.apple.com/jp/album/pixel-rhymes/1833495444" },
-          { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/58JHlNBrngqv1MvdLlp0eu?si=D2qFwK5pSICKx62byhXBog" },
-          { "label": "YouTube", "href": "https://music.youtube.com/playlist?list=OLAK5uy_lqrSmdarUV-gAxe4rAEDSOqVsGj_Ojs3w&si=bFpN2oXNonfBJz97" },
-          { "label": "Amazon", "href": "https://music.amazon.co.jp/albums/B0FMDJXXQS?ref=dm_sh_wYoiUw5PvIOr9gbXuU4uMTKlg" }
-        ],
-        "player": {
-          "spotify": "https://open.spotify.com/embed/album/58JHlNBrngqv1MvdLlp0eu?utm_source=generator",
-          "height": 352
-        }
-      },
-      {
-        "title": "EARTHLINES",
-        "meta": "Album / 2025",
-        "image": "EARTHLINES_artwork.png",
-        "tags": ["Album", "MetaHelix"],
-        "links": [
-          { "label": "Apple", "href": "https://music.apple.com/jp/album/earthlines/1836922234" },
-          { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/4hb6Pw5fYnPA0nQljFsClX?si=D2qFwK5pSICKx62byhXBog" },
-          { "label": "YouTube", "href": "https://music.youtube.com/playlist?list=OLAK5uy_lNcFFM6pLotzobVCBY5B6tTz2oZ-yxo2M&si=fU0Cri5LewOnZ0K6" },
-          { "label": "Amazon", "href": "https://music.amazon.com/albums/B0FP532NH2?marketplaceId=A1VC38T7YXB528&musicTerritory=JP&ref=dm_sh_zhvgLVIlnpkseL495TT2YBute" }
-        ],
-        "player": {
-          "spotify": "https://open.spotify.com/embed/album/4hb6Pw5fYnPA0nQljFsClX?utm_source=generator",
-          "height": 352
-        }
-      },
-      {
         "title": "Tideglass",
         "meta": "Album / 2025",
         "image": "Tideglass_artwork.png",
+        "date": "2025-10-14",
         "tags": ["Album", "LUMINA"],
         "links": [
           { "label": "Apple", "href": "https://music.apple.com/jp/album/tideglass/1847389623" },
@@ -176,10 +149,78 @@
         }
       },
       {
+        "title": "EARTHLINES",
+        "meta": "Album / 2025",
+        "image": "EARTHLINES_artwork.png",
+        "date": "2025-09-04",
+        "tags": ["Album", "MetaHelix"],
+        "links": [
+          { "label": "Apple", "href": "https://music.apple.com/jp/album/earthlines/1836922234" },
+          { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/4hb6Pw5fYnPA0nQljFsClX?si=D2qFwK5pSICKx62byhXBog" },
+          { "label": "YouTube", "href": "https://music.youtube.com/playlist?list=OLAK5uy_lNcFFM6pLotzobVCBY5B6tTz2oZ-yxo2M&si=fU0Cri5LewOnZ0K6" },
+          { "label": "Amazon", "href": "https://music.amazon.com/albums/B0FP532NH2?marketplaceId=A1VC38T7YXB528&musicTerritory=JP&ref=dm_sh_zhvgLVIlnpkseL495TT2YBute" }
+        ],
+        "player": {
+          "spotify": "https://open.spotify.com/embed/album/4hb6Pw5fYnPA0nQljFsClX?utm_source=generator",
+          "height": 352
+        }
+      },
+      {
+        "title": "PixelRhymes",
+        "meta": "Album / 2025",
+        "image": "PixelRhymes_artwork.png",
+        "date": "2025-08-18",
+        "tags": ["Album", "K-Cipher"],
+        "links": [
+          { "label": "Apple", "href": "https://music.apple.com/jp/album/pixel-rhymes/1833495444" },
+          { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/58JHlNBrngqv1MvdLlp0eu?si=D2qFwK5pSICKx62byhXBog" },
+          { "label": "YouTube", "href": "https://music.youtube.com/playlist?list=OLAK5uy_lqrSmdarUV-gAxe4rAEDSOqVsGj_Ojs3w&si=bFpN2oXNonfBJz97" },
+          { "label": "Amazon", "href": "https://music.amazon.co.jp/albums/B0FMDJXXQS?ref=dm_sh_wYoiUw5PvIOr9gbXuU4uMTKlg" }
+        ],
+        "player": {
+          "spotify": "https://open.spotify.com/embed/album/58JHlNBrngqv1MvdLlp0eu?utm_source=generator",
+          "height": 352
+        }
+      },
+      {
+        "title": "VERSE",
+        "meta": "Album / 2025",
+        "image": "VERSE_artwork.png",
+        "date": "2025-08-12",
+        "tags": ["Album", "MetaHelix"],
+        "links": [
+          { "label": "Apple", "href": "https://music.apple.com/jp/album/verse/1833311254" },
+          { "label": "Spotify", "href": "https://open.spotify.com/intl-ja/album/6FvzNTnz4ZH69Ge619kNhb?si=D2qFwK5pSICKx62byhXBog" },
+          { "label": "YouTube", "href": "https://music.youtube.com/playlist?list=OLAK5uy_mpMR21DdBt3x2y6Lf0zdzHe-zSI5BxYxE&si=Z_MSPpNLjkyZIB9N" },
+          { "label": "Amazon", "href": "https://music.amazon.com/albums/B0FM76527V?ref=dm_ff_amazonmusic_3p&tag=ffm0a-22" }
+        ],
+        "player": {
+          "spotify": "https://open.spotify.com/embed/album/6FvzNTnz4ZH69Ge619kNhb?utm_source=generator",
+          "height": 352
+        }
+      },
+      {
         "title": "Love Chronicle -toki no kioku-",
-        "meta": "Album / coming soon",
+        "meta": "Album / 2025",
         "image": "Love Chronicle アートワーク.png",
+        "date": "2025-11-20",
         "tags": ["Album", "SHION"],
+        "links": [
+          { "label": "Apple", "href": "https://music.apple.com/jp/album/love-chronicle-toki-no-kioku/1853854577" },
+          { "label": "Spotify", "href": "https://open.spotify.com/album/7HiTiwCW68DXyXqMitkn3u?si=POCr9hZJRhiOrfKRY2-w_A" },
+          { "label": "YouTube", "href": "https://music.youtube.com/playlist?list=OLAK5uy_nJTWbZZGsZVLoOSL_Gw9yJUudfx0wx_fw&si=zmIq8zWdk95udZWt" },
+          { "label": "Amazon", "href": "https://music.amazon.co.jp/albums/B0G2C8XV63?ref=dm_sh_5YplbpEIDdBQSfJ27JvW0byzf" }
+        ],
+        "player": {
+          "spotify": "https://open.spotify.com/embed/album/7HiTiwCW68DXyXqMitkn3u?utm_source=generator",
+          "height": 352
+        }
+      },
+      {
+        "title": "MIRROR WORLD",
+        "meta": "Album / coming soon",
+        "image": "MIRROR WORLD.png",
+        "tags": ["Album", "輪猫（Rin-neko)"],
         "badge": "coming soon",
         "links": [
           { "label": "Apple", "href": "#" },

@@ -4,7 +4,10 @@
     {
       "source": "/content.json",
       "headers": [{ "key": "Cache-Control", "value": "no-store" }]
+    },
+    {
+      "source": "/content.en.json",
+      "headers": [{ "key": "Cache-Control", "value": "no-store" }]
     }
   ]
 }
-

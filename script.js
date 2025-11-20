@@ -403,15 +403,39 @@ function renderFooter(footer) {
 }
 
 function renderSite(data) {
+  // Sort helpers: newest-first if `date` exists
+  const parseDate = (d) => {
+    if (!d) return null;
+    const t = Date.parse(d);
+    return isNaN(t) ? null : new Date(t);
+  };
+  const sortByDateDesc = (items = []) => {
+    // Stable: items with valid date first (newest→oldest), then others in original order
+    return [...items]
+      .map((it, i) => ({ it, i, dt: parseDate(it.date) }))
+      .sort((a, b) => {
+        const ad = a.dt, bd = b.dt;
+        if (ad && bd) return bd - ad;          // newer first
+        if (ad && !bd) return -1;              // dated items first
+        if (!ad && bd) return 1;
+        return a.i - b.i;                      // keep original order
+      })
+      .map(x => x.it);
+  };
+
   renderHero(data.hero);
   // Section backgrounds loop (falls back gracefully)
   applySectionBackgrounds(data.sectionBackgrounds || data.backgrounds || []);
   renderAbout(data.about);
   renderNews(data.news);
+  // Artists: newest-first if `date` exists per item
   document.getElementById('artists-subtitle').textContent = data.artists?.subtitle || '';
-  renderCards('artists-grid', data.artists);
+  const artistsData = data.artists ? { ...data.artists, items: sortByDateDesc(data.artists.items) } : null;
+  renderCards('artists-grid', artistsData);
+  // Albums (works): newest-first by `date`
   document.getElementById('works-subtitle').textContent = data.works?.subtitle || '';
-  renderCards('works-grid', data.works);
+  const worksData = data.works ? { ...data.works, items: sortByDateDesc(data.works.items) } : null;
+  renderCards('works-grid', worksData);
   renderVideo(data.video);
   renderContact(data.contact);
   renderFooter(data.footer);
