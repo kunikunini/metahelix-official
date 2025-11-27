@@ -362,7 +362,8 @@ a:hover { text-decoration: underline; }
   /* Horizontal slideable rows for growing lists */
   grid-template-columns: none;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(280px, 360px);
+  /* 20% smaller cards: 280-360px -> 224-288px */
+  grid-auto-columns: minmax(224px, 288px);
   overflow-x: auto;
   overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
@@ -393,32 +394,154 @@ a:hover { text-decoration: underline; }
 }
 .hs-dragging .hs-thumb { filter: brightness(1.15) saturate(1.12); }
 .card { grid-column: span 4; background: rgba(12, 15, 21, 0.7); border: 1px solid rgba(0,229,255,0.22); border-radius: var(--radius); overflow: clip; position: relative; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-  display: flex; flex-direction: column; box-shadow: 0 0 24px rgba(0,229,255,.12); }
+  display: flex; flex-direction: column; box-shadow: 0 0 24px rgba(0,229,255,.12); transform: translateY(0) scale(var(--card-scale, 1)); transform-origin: center; }
 .card::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(135deg, rgba(255,47,185,.18), rgba(0,229,255,.18)); opacity: .06; }
-.card:hover { transform: translateY(-3px); border-color: rgba(255,47,185,0.4); box-shadow: 0 0 32px rgba(255,47,185,.18), 0 0 36px rgba(0,229,255,.16); }
+.card:hover { border-color: rgba(255,47,185,0.4); box-shadow: 0 0 32px rgba(255,47,185,.18), 0 0 36px rgba(0,229,255,.16); }
+.card.flash-highlight { animation: cardFlash 1.9s ease-out; position: relative; z-index: 2; }
+.card.flash-highlight::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: calc(var(--radius) + 6px);
+  pointer-events: none;
+  background: radial-gradient(60% 60% at 50% 50%, rgba(0,229,255,.36), rgba(255,47,185,.24) 40%, transparent 70%);
+  filter: blur(6px);
+  opacity: 0;
+  animation: cardAura 1.2s ease-out;
+}
+@keyframes cardFlash {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0,229,255,0), 0 0 0 0 rgba(255,47,185,0), 0 0 0 rgba(0,0,0,0);
+    border-color: rgba(0,229,255,0.22);
+    transform: translateY(0) scale(1);
+  }
+  15% {
+    box-shadow:
+      0 0 0 10px rgba(0,229,255,.50),
+      0 0 0 22px rgba(255,47,185,.28),
+      0 0 42px rgba(0,229,255,.65),
+      0 0 56px rgba(255,47,185,.55);
+    border-color: rgba(255,47,185,.85);
+    transform: translateY(-3px) scale(1.012);
+  }
+  50% {
+    box-shadow:
+      0 0 0 6px rgba(0,229,255,.25),
+      0 0 0 14px rgba(255,47,185,.16),
+      0 0 28px rgba(0,229,255,.45),
+      0 0 44px rgba(255,47,185,.35);
+    border-color: rgba(255,47,185,.55);
+    transform: translateY(-1px) scale(1.006);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0,229,255,0), 0 0 0 0 rgba(255,47,185,0), 0 0 0 rgba(0,0,0,0);
+    border-color: rgba(0,229,255,0.22);
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes cardAura { 0% { opacity: 0; } 10% { opacity: 1; } 100% { opacity: 0; } }
+
+/* Strong, obvious 10s lightning highlight around card border */
+.card.lightning-highlight {
+  border-color: #ffea00; /* neon yellow */
+  box-shadow: 0 0 26px rgba(255, 234, 0, .65), 0 0 60px rgba(255, 234, 0, .28);
+  position: relative;
+  z-index: 3;
+  animation: borderGlowPulse 10s ease-out;
+}
+.card.lightning-highlight::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  padding: 4px; /* ring thickness */
+  border-radius: calc(var(--radius) + 6px);
+  background:
+    conic-gradient(
+      from 0deg,
+      rgba(255,255,180,0) 0deg,
+      rgba(255,255,160,0) 300deg,
+      rgba(255,255,190,.85) 320deg,
+      #fff 332deg,
+      rgba(255,255,190,.85) 344deg,
+      rgba(255,255,160,0) 360deg
+    );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude; /* show only the ring */
+  filter: drop-shadow(0 0 18px rgba(255, 234, 0, .85)) drop-shadow(0 0 34px rgba(255, 234, 0, .45));
+  animation: ringSpin 1.6s linear infinite, ringFlicker 0.6s steps(2, end) infinite;
+  pointer-events: none;
+}
+.card.lightning-highlight::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: calc(var(--radius) + 8px);
+  background:
+    conic-gradient(
+      from 90deg,
+      rgba(255, 255, 120, 0) 0deg,
+      rgba(255, 255, 120, 0) 82deg,
+      rgba(255, 255, 180, .9) 88deg,
+      #fff 92deg,
+      rgba(255, 255, 180, .9) 96deg,
+      rgba(255, 255, 120, 0) 102deg,
+      rgba(255, 255, 120, 0) 360deg
+    );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  filter: blur(3px) drop-shadow(0 0 10px rgba(255, 234, 0, .8));
+  animation: ringSpin 0.9s linear infinite reverse, boltJitter 0.9s steps(3, end) infinite;
+  opacity: .9;
+  pointer-events: none;
+}
+
+@keyframes ringSpin { to { transform: rotate(360deg); } }
+@keyframes ringFlicker {
+  0%, 100% { opacity: 1; }
+  40% { opacity: .9; }
+  50% { opacity: .7; }
+  60% { opacity: 1; }
+}
+@keyframes boltJitter {
+  0% { filter: blur(3px) drop-shadow(0 0 10px rgba(255, 234, 0, .9)); }
+  50% { filter: blur(2px) drop-shadow(0 0 14px rgba(255, 234, 0, 1)); }
+  100% { filter: blur(3px) drop-shadow(0 0 10px rgba(255, 234, 0, .9)); }
+}
+@keyframes borderGlowPulse {
+  0% { box-shadow: 0 0 12px rgba(255, 234, 0, .4), 0 0 28px rgba(255, 234, 0, .18); }
+  15% { box-shadow: 0 0 28px rgba(255, 234, 0, .85), 0 0 64px rgba(255, 234, 0, .38); }
+  100% { box-shadow: 0 0 8px rgba(255, 234, 0, .25), 0 0 20px rgba(255, 234, 0, .12); }
+}
 .card-media { aspect-ratio: 16/9; background: #0d0f14; display: grid; place-items: center; color: var(--muted); position: relative; overflow: hidden; }
 .artists .card-media, .works .card-media { aspect-ratio: auto; }
 .card-media img { width: 100%; height: auto; object-fit: contain; object-position: center; display: block; }
+.card .card-media img { transform: scale(calc(1 / var(--card-scale, 1))); transform-origin: center; will-change: transform; }
 .artists .card-media img, .works .card-media img { height: auto; }
-.card-body { padding: 14px; display: grid; gap: 6px; }
-.card-title { margin: 0; font-size: 16px; }
-.card-meta { color: var(--muted); font-size: 12px; }
+.card-body { padding: 11px; display: grid; gap: 6px; }
+.card-title { margin: 0; font-size: 13px; }
+.card-meta { color: var(--muted); font-size: 10px; }
 .chip-row { display: flex; gap: 8px; flex-wrap: wrap; }
-.card-tags { padding: 0 14px 14px; }
+.card-tags { padding: 0 11px 11px; }
 /* keep natural height; no forced min-height for tags */
-.chip { font-size: 12px; padding: 4px 8px; border-radius: 999px; background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.25); }
-.card-actions { display: flex; gap: 10px; padding: 0 14px 14px; margin-top: 8px; }
+.chip { font-size: 10px; padding: 3px 7px; border-radius: 999px; background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.25); }
+.card-actions { display: flex; gap: 8px; padding: 0 11px 11px; margin-top: 6px; }
 .card-actions { flex-wrap: wrap; }
 .card-actions .btn {
   box-shadow: none;
-  padding: 8px 12px;
-  font-size: 12px;
+  padding: 6px 10px;
+  font-size: 10px;
   line-height: 1.2;
 }
 
 /* Embedded player block (e.g., Spotify) */
-.card-player { margin: 0 14px 14px; border-radius: 12px; overflow: hidden; background: rgba(0,229,255,0.06); border: 1px solid rgba(0,229,255,0.22); box-shadow: inset 0 0 18px rgba(0,229,255,.08); }
-.card-player iframe { display: block; width: 100%; height: 352px; border: 0; }
+.card-player { margin: 0 11px 11px; border-radius: 12px; overflow: hidden; background: rgba(0,229,255,0.06); border: 1px solid rgba(0,229,255,0.22); box-shadow: inset 0 0 18px rgba(0,229,255,.08); }
+.card-player iframe { display: block; width: 100%; height: var(--player-h, 282px); border: 0; transition: height .28s ease; }
+/* expand player whenカードが注目状態（hover/focus/近接拡大） */
+.card:hover .card-player iframe,
+.card:focus-within .card-player iframe,
+.card.player-expanded .card-player iframe { height: var(--player-h-expanded, var(--player-h, 282px)); }
 
 /* Media overlay badge */
 .card-badge {

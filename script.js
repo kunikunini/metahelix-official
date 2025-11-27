@@ -61,6 +61,17 @@ function createEl(tag, options = {}) {
   return el;
 }
 
+// Simple slugify for creating in-page anchors (e.g., works cards)
+function slugify(str) {
+  if (!str) return '';
+  return String(str)
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '') // remove diacritics
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 function applySectionBackgrounds(images) {
   if (!images) return;
   const setBg = (id, img) => {
@@ -149,22 +160,83 @@ function renderAbout(about) {
   });
 }
 
-function renderNews(news) {
+function renderNews(news, worksCtx) {
   if (!news) return;
   setText('news-subtitle', news.subtitle || '');
   const list = document.getElementById('news-list');
   list.innerHTML = '';
+  const lang = getLang();
+
+  const ordinalEn = (n) => {
+    const s = ['th','st','nd','rd'];
+    const v = n % 100; const suf = s[(v - 20) % 10] || s[v] || s[0];
+    return `${n}${suf}`;
+  };
+  const makeUniformTitle = (workItem, n) => {
+    const title = workItem?.title || '';
+    // guess artist name from tags (first non-"Album" tag)
+    let artist = '';
+    if (Array.isArray(workItem?.tags)) {
+      const t = workItem.tags.find(t => String(t).toLowerCase() !== 'album');
+      if (t) artist = t;
+    }
+    if (lang === 'ja') {
+      // Use English-style ordinal in Japanese UI as requested
+      const nth = n ? `${ordinalEn(n)} Album` : 'Album';
+      if (artist && title) return `${artist}：${nth}：${title}：リリース`;
+      if (title) return `${nth}：${title}：リリース`;
+      return `${artist || ''}：${nth}：リリース`;
+    } else {
+      const nth = n ? `${ordinalEn(n)} Album` : 'Album';
+      if (artist && title) return `${artist}: ${nth}: ${title}: Released`;
+      if (title) return `${nth}: ${title}: Released`;
+      return `${artist || ''}: ${nth}: Released`;
+    }
+  };
+  const findWorkByHash = (hash) => {
+    if (!worksCtx || !worksCtx.items) return null;
+    const sid = hash.replace(/^#?work-/, '');
+    return worksCtx.items.find(it => slugify(it.title) === sid) || null;
+  };
+  const nthForArtist = (workItem) => {
+    if (!worksCtx || !worksCtx.items || !workItem) return null;
+    // determine artist tag
+    const artistTag = (workItem.tags || []).find(t => String(t).toLowerCase() !== 'album');
+    if (!artistTag) return null;
+    // collect works for this artist
+    const parseDate = (d) => { const t = Date.parse(d); return isNaN(t) ? null : new Date(t); };
+    const items = worksCtx.items.filter(it => Array.isArray(it.tags) && it.tags.includes(artistTag));
+    // sort by date ascending (older to newer)
+    items.sort((a,b) => {
+      const ad = parseDate(a.date); const bd = parseDate(b.date);
+      if (ad && bd) return ad - bd; if (ad && !bd) return -1; if (!ad && bd) return 1; return 0;
+    });
+    const idx = items.findIndex(x => x.title === workItem.title);
+    return idx >= 0 ? (idx + 1) : null;
+  };
   (news.items || []).forEach(n => {
     const li = createEl('li', { className: 'news-item' });
     const date = createEl('div', { className: 'news-date', text: n.date || '' });
     const body = createEl('div');
     const title = createEl('h3', { className: 'news-title' });
+    let displayTitle = n.title || '';
+    let isHash = false;
+    if (n.url && typeof n.url === 'string') {
+      isHash = n.url.startsWith('#');
+      if (isHash) {
+        const work = findWorkByHash(n.url);
+        const nth = nthForArtist(work);
+        displayTitle = makeUniformTitle(work, nth);
+      }
+    }
     if (n.url) {
-      const a = createEl('a', { attrs: { href: n.url, target: n.target || '_blank', rel: 'noopener' } });
-      a.textContent = n.title || '';
+      const a = createEl('a', { attrs: { href: n.url } });
+      a.target = isHash ? '_self' : (n.target || '_blank');
+      if (!isHash) a.rel = 'noopener';
+      a.textContent = displayTitle;
       title.appendChild(a);
     } else {
-      title.textContent = n.title || '';
+      title.textContent = displayTitle;
     }
     const meta = createEl('div', { className: 'card-meta', text: n.summary || '' });
     body.appendChild(title); body.appendChild(meta);
@@ -180,9 +252,20 @@ function renderCards(sectionId, data) {
   const tagsAfterPlayer = sectionId === 'artists-grid' || sectionId === 'works-grid';
   (data.items || []).forEach(item => {
     const card = createEl('article', { className: 'card' });
+    // Add stable anchors for works cards so News can deep-link
+    if (sectionId === 'works-grid' && item.title) {
+      const id = 'work-' + slugify(item.title);
+      card.id = id;
+    }
     const media = createEl('div', { className: 'card-media' });
     if (item.image) {
       const img = createEl('img', { attrs: { src: normalizeImagePath(item.image), alt: item.title || 'thumbnail', loading: 'lazy', decoding: 'async' } });
+      // Optional retina support: if image2x provided, expose as 2x for crisper zoom
+      if (item.image2x) {
+        const x1 = normalizeImagePath(item.image);
+        const x2 = normalizeImagePath(item.image2x);
+        img.setAttribute('srcset', `${x1} 1x, ${x2} 2x`);
+      }
       media.appendChild(img);
     } else if (item.embed) {
       media.innerHTML = item.embed; // trusted input expected from local JSON
@@ -218,12 +301,46 @@ function renderCards(sectionId, data) {
     if (item.player && item.player.spotify) {
       const playerWrap = createEl('div', { className: 'card-player spotify' });
       const iframe = document.createElement('iframe');
-      iframe.src = item.player.spotify;
+      const toEmbedSpotify = (url) => {
+        if (!url) return url;
+        let u = String(url);
+        // Convert share URL to embed URL when necessary
+        if (!/\/embed\//.test(u)) {
+          u = u.replace('open.spotify.com/', 'open.spotify.com/embed/');
+        }
+        // Avoid duplicate 'embed/embed'
+        u = u.replace('/embed/embed/', '/embed/');
+        return u;
+      };
+      const spUrl = toEmbedSpotify(item.player.spotify);
+      iframe.src = spUrl;
       iframe.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
       iframe.loading = 'lazy';
       iframe.setAttribute('frameborder', '0');
       iframe.style.width = '100%';
-      if (item.player.height) iframe.style.height = String(item.player.height) + 'px';
+      // Decide reasonable default heights per Spotify embed type if not provided
+      const typeGuess = /\/embed\/(album|track|playlist|show|episode)\//.exec(spUrl)?.[1] || '';
+      let baseH = item.player.height;
+      if (!baseH) {
+        if (typeGuess === 'album') baseH = 352; // full album with tracks
+        else if (typeGuess === 'playlist' || typeGuess === 'show') baseH = 232; // show/playlist title + list
+        else if (typeGuess === 'track' || typeGuess === 'episode') baseH = 152; // compact track/episode
+        else baseH = 232;
+      }
+      // Scale down by 20% only for non-"show/track/episode" embeds unless explicitly disabled
+      let scale = 1;
+      const isGrid = (sectionId === 'artists-grid' || sectionId === 'works-grid');
+      const avoidScale = item.player.noScale === true || typeGuess === 'show' || typeGuess === 'track' || typeGuess === 'episode';
+      if (isGrid && !avoidScale) scale = 0.8;
+      const h = Math.round(baseH * scale);
+      // Compute expanded height to reveal more info (titles) while focused/hovered
+      let expanded = h;
+      if (typeGuess === 'album') expanded = Math.max(h, 420);
+      else if (typeGuess === 'playlist' || typeGuess === 'show') expanded = Math.max(h, 340);
+      else expanded = Math.max(h, 200);
+      // Expose via CSS variables for smooth transition
+      playerWrap.style.setProperty('--player-h', h + 'px');
+      playerWrap.style.setProperty('--player-h-expanded', expanded + 'px');
       playerWrap.appendChild(iframe);
       card.appendChild(playerWrap);
     }
@@ -410,15 +527,16 @@ function renderSite(data) {
     return isNaN(t) ? null : new Date(t);
   };
   const sortByDateDesc = (items = []) => {
-    // Stable: items with valid date first (newest→oldest), then others in original order
+    // Priority: featured first → dated (newest→oldest) → undated in original order
     return [...items]
-      .map((it, i) => ({ it, i, dt: parseDate(it.date) }))
+      .map((it, i) => ({ it, i, dt: parseDate(it.date), feat: it.featured === true }))
       .sort((a, b) => {
+        if (a.feat !== b.feat) return a.feat ? -1 : 1; // featured first
         const ad = a.dt, bd = b.dt;
-        if (ad && bd) return bd - ad;          // newer first
-        if (ad && !bd) return -1;              // dated items first
+        if (ad && bd) return bd - ad;                  // newer first
+        if (ad && !bd) return -1;                      // dated items before undated
         if (!ad && bd) return 1;
-        return a.i - b.i;                      // keep original order
+        return a.i - b.i;                              // keep original order
       })
       .map(x => x.it);
   };
@@ -427,7 +545,7 @@ function renderSite(data) {
   // Section backgrounds loop (falls back gracefully)
   applySectionBackgrounds(data.sectionBackgrounds || data.backgrounds || []);
   renderAbout(data.about);
-  renderNews(data.news);
+  renderNews(data.news, data.works);
   // Artists: newest-first if `date` exists per item
   document.getElementById('artists-subtitle').textContent = data.artists?.subtitle || '';
   const artistsData = data.artists ? { ...data.artists, items: sortByDateDesc(data.artists.items) } : null;
@@ -444,12 +562,16 @@ function renderSite(data) {
   applyDuoTitles();
   randomizeGradientPhases();
   initCustomHScrollbars();
+  initCardProximityEnlarge();
 
   // Hide disabled sections
   (data.hideSections || []).forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.add('hide');
   });
+
+  // If URL already has a hash, highlight the corresponding card
+  highlightHashTarget();
 }
 
 // Mobile menu
@@ -485,7 +607,43 @@ document.addEventListener('DOMContentLoaded', () => {
   initStarfield();
   randomizeGradientPhases();
   initHeroGlitch();
+  // Highlight on hash navigation
+  window.addEventListener('hashchange', () => {
+    // Delay slightly to allow native scroll to settle
+    setTimeout(highlightHashTarget, 50);
+  });
 });
+
+function highlightHashTarget() {
+  const hash = decodeURIComponent(location.hash || '').replace(/^#/, '');
+  if (!hash) return;
+  const el = document.getElementById(hash);
+  if (!el) return;
+  // Center the album card in viewport and within horizontal grid
+  if (hash.startsWith('work-')) {
+    try {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+    } catch (_) {
+      // Fallback: manual horizontal centering in parent grid
+      const grid = document.getElementById('works-grid');
+      if (grid && typeof el.offsetLeft === 'number') {
+        const targetLeft = el.offsetLeft - (grid.clientWidth / 2) + (el.clientWidth / 2);
+        grid.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
+      }
+      // Vertical centering
+      const rect = el.getBoundingClientRect();
+      window.scrollTo({ top: window.scrollY + rect.top - (window.innerHeight/2 - rect.height/2), behavior: 'smooth' });
+    }
+  }
+  // Immediate flash + stronger lightning ring for 10s
+  el.classList.remove('flash-highlight', 'lightning-highlight');
+  void el.offsetWidth; // reflow to restart animations
+  el.classList.add('flash-highlight');
+  setTimeout(() => el.classList.remove('flash-highlight'), 1800);
+  // Apply the obvious lightning border effect
+  el.classList.add('lightning-highlight');
+  setTimeout(() => el.classList.remove('lightning-highlight'), 10000);
+}
 
 function initCustomHScrollbars() {
   const ids = ['artists-grid', 'works-grid'];
@@ -553,6 +711,77 @@ function initCustomHScrollbars() {
       if (x < (parseFloat(getComputedStyle(thumb).left) - 10)) grid.scrollBy({ left: -page, behavior: 'smooth' });
       else grid.scrollBy({ left: page, behavior: 'smooth' });
     });
+  });
+}
+
+// Proximity-based enlarge: approach a card -> scale up toward original size
+function initCardProximityEnlarge() {
+  const grids = ['artists-grid', 'works-grid']
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+  const MAX_SCALE = 1.25; // roughly revert 20% shrink
+  const MIN_SCALE = 1.0;  // base scale
+  const THRESH = 170;     // px distance for influence
+  grids.forEach(grid => {
+    if (grid.dataset.proxBound === '1') return;
+    grid.dataset.proxBound = '1';
+    const cards = Array.from(grid.querySelectorAll('.card'));
+    const resetAll = () => {
+      cards.forEach(c => { c.style.setProperty('--card-scale', MIN_SCALE); c.style.zIndex = ''; });
+    };
+    resetAll();
+    const onMove = (e) => {
+      const gx = e.clientX;
+      const gy = e.clientY;
+      let topCard = null; let topScale = 0;
+      cards.forEach(c => {
+        const r = c.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dist = Math.hypot(gx - cx, gy - cy);
+        const ratio = Math.max(0, 1 - dist / THRESH);
+        const scale = MIN_SCALE + ratio * (MAX_SCALE - MIN_SCALE);
+        c.style.setProperty('--card-scale', scale.toFixed(3));
+        if (scale > topScale) { topScale = scale; topCard = c; }
+      });
+      // raise the closest card above neighbors to avoid overlap artifacts
+      cards.forEach(c => c.style.zIndex = (c === topCard && topScale > 1.02) ? '12' : '');
+      // expand player area only for the closest boosted card
+      cards.forEach(c => c.classList.remove('player-expanded'));
+      if (topCard && topScale > 1.12) topCard.classList.add('player-expanded');
+    };
+    const onLeave = () => { resetAll(); };
+    grid.addEventListener('mousemove', onMove);
+    grid.addEventListener('mouseleave', onLeave);
+    // Keyboard accessibility: focus within a card grows it
+    cards.forEach(c => {
+      c.addEventListener('focusin', () => { c.style.setProperty('--card-scale', MAX_SCALE); c.style.zIndex = '12'; c.classList.add('player-expanded'); });
+      c.addEventListener('focusout', () => { c.style.setProperty('--card-scale', MIN_SCALE); c.style.zIndex = ''; c.classList.remove('player-expanded'); });
+    });
+    // Touch: on tap, briefly boost the tapped card
+    grid.addEventListener('touchstart', (e) => {
+      const t = e.target.closest('.card');
+      if (!t) return;
+      cards.forEach(c => { if (c !== t) c.style.setProperty('--card-scale', MIN_SCALE); });
+      t.style.setProperty('--card-scale', MAX_SCALE);
+      t.style.zIndex = '12';
+      t.classList.add('player-expanded');
+      // Auto-center the tapped card horizontally within the grid and vertically in viewport
+      try {
+        // Prefer native centering where supported
+        t.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+      } catch (_) {
+        const parentGrid = t.closest('.card-grid');
+        if (parentGrid) {
+          const targetLeft = t.offsetLeft - (parentGrid.clientWidth / 2) + (t.clientWidth / 2);
+          parentGrid.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
+        }
+        const rect = t.getBoundingClientRect();
+        const delta = (rect.top + rect.height / 2) - (window.innerHeight / 2);
+        window.scrollBy({ top: delta, behavior: 'smooth' });
+      }
+      setTimeout(() => { t.style.setProperty('--card-scale', MIN_SCALE); t.style.zIndex = ''; t.classList.remove('player-expanded'); }, 1400);
+    }, { passive: true });
   });
 }
 

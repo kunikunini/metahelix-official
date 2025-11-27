@@ -27,11 +27,12 @@
   "news": {
     "subtitle": "最新のお知らせ・リリース情報",
     "items": [
-      { "date": "2025-11-20", "title": "SHION 1st ALBUM 「Love Chronicle -toki no kioku-」リリース", "url": "#works" },
-      { "date": "2025-10-14", "title": "LUMINA 1st ALBUM 「Tideglass」リリース", "url": "#" },
-      { "date": "2025-09-04", "title": "2nd ALBUM 「EARTHLINE」リリース", "url": "#" },
-      { "date": "2025-08-18", "title": "K-Cipher solo ALBUM 「Pixel Rhymes」リリース", "url": "#" },
-      { "date": "2025-08-12", "title": "1st ALBUM 「VERSE」リリース", "url": "#" }
+      { "date": "2025-11-27", "title": "輪猫（Rin-neko) アルバム「MIRROR WORLD」リリース", "url": "#work-mirror-world" },
+      { "date": "2025-11-20", "title": "SHION 1st ALBUM 「Love Chronicle -toki no kioku-」リリース", "url": "#work-love-chronicle-toki-no-kioku" },
+      { "date": "2025-10-14", "title": "LUMINA 1st ALBUM 「Tideglass」リリース", "url": "#work-tideglass" },
+      { "date": "2025-09-04", "title": "2nd ALBUM 「EARTHLINE」リリース", "url": "#work-earthlines" },
+      { "date": "2025-08-18", "title": "K-Cipher solo ALBUM 「Pixel Rhymes」リリース", "url": "#work-pixelrhymes" },
+      { "date": "2025-08-12", "title": "1st ALBUM 「VERSE」リリース", "url": "#work-verse" }
     ]
   },
   "artists": {
@@ -103,20 +104,22 @@
         "title": "輪猫（Rin-neko)",
         "meta": "VOCALOID / Jpop",
         "image": "Rin-neko.png",
-        "badge": "coming soon",
+        "date": "2025-11-27",
         "tags": ["VOCALOID", "Jpop", "produce", "song writing"],
         "links": [
-          { "label": "Apple", "href": "#" },
-          { "label": "Spotify", "href": "#" },
+          { "label": "Apple", "href": "https://music.apple.com/jp/album/mirror-world/1854488660" },
+          { "label": "Spotify", "href": "https://open.spotify.com/album/3eT9wuYdzPULIRe0BDNUGo?si=yxBfblPIQFSTy-9rgKGBQw" },
           { "label": "YouTube", "href": "#" },
-          { "label": "Amazon", "href": "#" }
-        ]
+          { "label": "Amazon", "href": "https://music.amazon.co.jp/artists/B0G2R1V49X?ref=dm_sh_vgyKCcKdoE80eNVCv6Zf2autS" }
+        ],
+        "player": { "spotify": "https://open.spotify.com/album/3eT9wuYdzPULIRe0BDNUGo?si=yxBfblPIQFSTy-9rgKGBQw", "height": 352 }
       },
       {
         "title": "Auri‑Nova",
         "meta": "Future Bass / Alt-Pop",
         "image": "image/auri-nova.png",
         "badge": "coming soon",
+        "featured": true,
         "tags": ["Produce", "Vocal", "Songwriting"],
         "links": [
           { "label": "Apple", "href": "#" },
@@ -131,6 +134,20 @@
   "works": {
     "subtitle": "リリース・楽曲提供・リミックス",
     "items": [
+      {
+        "title": "Hold the Right",
+        "meta": "Album / coming soon",
+        "image": "Hold the Right.png",
+        "featured": true,
+        "tags": ["Album", "Auri‑Nova"],
+        "badge": "coming soon",
+        "links": [
+          { "label": "Apple", "href": "#" },
+          { "label": "Spotify", "href": "#" },
+          { "label": "YouTube", "href": "#" },
+          { "label": "Amazon", "href": "#" }
+        ]
+      },
       {
         "title": "Tideglass",
         "meta": "Album / 2025",
@@ -218,16 +235,17 @@
       },
       {
         "title": "MIRROR WORLD",
-        "meta": "Album / coming soon",
+        "meta": "Album / 2025",
         "image": "MIRROR WORLD.png",
+        "date": "2025-11-27",
         "tags": ["Album", "輪猫（Rin-neko)"],
-        "badge": "coming soon",
         "links": [
-          { "label": "Apple", "href": "#" },
-          { "label": "Spotify", "href": "#" },
+          { "label": "Apple", "href": "https://music.apple.com/jp/album/mirror-world/1854488660" },
+          { "label": "Spotify", "href": "https://open.spotify.com/album/3eT9wuYdzPULIRe0BDNUGo?si=yxBfblPIQFSTy-9rgKGBQw" },
           { "label": "YouTube", "href": "#" },
-          { "label": "Amazon", "href": "#" }
-        ]
+          { "label": "Amazon", "href": "https://music.amazon.co.jp/artists/B0G2R1V49X?ref=dm_sh_vgyKCcKdoE80eNVCv6Zf2autS" }
+        ],
+        "player": { "spotify": "https://open.spotify.com/album/3eT9wuYdzPULIRe0BDNUGo?si=yxBfblPIQFSTy-9rgKGBQw", "height": 352 }
       }
     ]
   },
