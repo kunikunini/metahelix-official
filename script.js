@@ -561,8 +561,13 @@ function renderSite(data) {
   initSubtitleGlitch();
   applyDuoTitles();
   randomizeGradientPhases();
-  initCustomHScrollbars();
-  initCardProximityEnlarge();
+  // Mobile: prefer vertical stacking + tap-to-reveal player
+  if (window.matchMedia && window.matchMedia('(max-width: 640px)').matches) {
+    initMobileCardToggles();
+  } else {
+    initCustomHScrollbars();
+    initCardProximityEnlarge();
+  }
 
   // Hide disabled sections
   (data.hideSections || []).forEach(id => {
@@ -572,6 +577,33 @@ function renderSite(data) {
 
   // If URL already has a hash, highlight the corresponding card
   highlightHashTarget();
+}
+
+// Mobile UX: tap media to toggle embedded player within the card
+function initMobileCardToggles() {
+  const mq = window.matchMedia('(max-width: 640px)');
+  const bind = () => {
+    if (!mq.matches) return;
+    const cards = document.querySelectorAll('#artists-grid .card, #works-grid .card');
+    cards.forEach(card => {
+      if (card.dataset.mobileBound === '1') return;
+      card.dataset.mobileBound = '1';
+      const hasPlayer = !!card.querySelector('.card-player');
+      if (!hasPlayer) return;
+      const media = card.querySelector('.card-media');
+      if (media) {
+        media.style.cursor = 'pointer';
+        media.addEventListener('click', (e) => {
+          // avoid interfering when clicking on actual links overlayed in media
+          const link = e.target.closest('a');
+          if (link) return;
+          card.classList.toggle('player-open');
+        });
+      }
+    });
+  };
+  bind();
+  window.addEventListener('resize', bind);
 }
 
 // Mobile menu
