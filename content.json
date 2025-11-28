@@ -112,7 +112,7 @@
           { "label": "YouTube", "href": "#" },
           { "label": "Amazon", "href": "https://music.amazon.co.jp/artists/B0G2R1V49X?ref=dm_sh_vgyKCcKdoE80eNVCv6Zf2autS" }
         ],
-        "player": { "spotify": "https://open.spotify.com/album/3eT9wuYdzPULIRe0BDNUGo?si=yxBfblPIQFSTy-9rgKGBQw", "height": 352 }
+        "player": { "spotify": "https://open.spotify.com/embed/album/3eT9wuYdzPULIRe0BDNUGo?utm_source=generator", "height": 352 }
       },
       {
         "title": "Auri‑Nova",
@@ -245,7 +245,7 @@
           { "label": "YouTube", "href": "#" },
           { "label": "Amazon", "href": "https://music.amazon.co.jp/artists/B0G2R1V49X?ref=dm_sh_vgyKCcKdoE80eNVCv6Zf2autS" }
         ],
-        "player": { "spotify": "https://open.spotify.com/album/3eT9wuYdzPULIRe0BDNUGo?si=yxBfblPIQFSTy-9rgKGBQw", "height": 352 }
+        "player": { "spotify": "https://open.spotify.com/embed/album/3eT9wuYdzPULIRe0BDNUGo?utm_source=generator", "height": 352 }
       }
     ]
   },
