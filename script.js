@@ -94,7 +94,7 @@ function applySectionBackgrounds(images) {
 
   if (Array.isArray(images)) {
     if (!images.length) return;
-    const order = ['hero', 'about', 'news', 'artists', 'works', 'video', 'contact'];
+    const order = ['hero','about','news','artists','works','video','contact'];
     for (let i = 0; i < order.length; i++) setBg(order[i], images[i % images.length]);
   } else if (typeof images === 'object') {
     Object.entries(images).forEach(([id, img]) => setBg(id, img));
@@ -168,7 +168,7 @@ function renderNews(news, worksCtx) {
   const lang = getLang();
 
   const ordinalEn = (n) => {
-    const s = ['th', 'st', 'nd', 'rd'];
+    const s = ['th','st','nd','rd'];
     const v = n % 100; const suf = s[(v - 20) % 10] || s[v] || s[0];
     return `${n}${suf}`;
   };
@@ -207,7 +207,7 @@ function renderNews(news, worksCtx) {
     const parseDate = (d) => { const t = Date.parse(d); return isNaN(t) ? null : new Date(t); };
     const items = worksCtx.items.filter(it => Array.isArray(it.tags) && it.tags.includes(artistTag));
     // sort by date ascending (older to newer)
-    items.sort((a, b) => {
+    items.sort((a,b) => {
       const ad = parseDate(a.date); const bd = parseDate(b.date);
       if (ad && bd) return ad - bd; if (ad && !bd) return -1; if (!ad && bd) return 1; return 0;
     });
@@ -557,9 +557,16 @@ function renderSite(data) {
   renderVideo(data.video);
   renderContact(data.contact);
   renderFooter(data.footer);
+  initIconMagnetism();
+  initSubtitleGlitch();
+  applyDuoTitles();
+  randomizeGradientPhases();
   // Mobile: prefer vertical stacking + tap-to-reveal player
   if (window.matchMedia && window.matchMedia('(max-width: 640px)').matches) {
     initMobileCardToggles();
+  } else {
+    initCustomHScrollbars();
+    initCardProximityEnlarge();
   }
 
   // Hide disabled sections
@@ -614,7 +621,7 @@ function setupMenu() {
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: 'smooth' });
     // maintain #top in URL for consistency
-    try { history.replaceState(null, '', '#top'); } catch (_) { }
+    try { history.replaceState(null, '', '#top'); } catch (_) {}
   });
 }
 
@@ -629,7 +636,9 @@ document.addEventListener('DOMContentLoaded', () => {
   updateLangButtons();
   setupMenu();
   loadContent();
-
+  initStarfield();
+  randomizeGradientPhases();
+  initHeroGlitch();
   // Highlight on hash navigation
   window.addEventListener('hashchange', () => {
     // Delay slightly to allow native scroll to settle
@@ -655,7 +664,7 @@ function highlightHashTarget() {
       }
       // Vertical centering
       const rect = el.getBoundingClientRect();
-      window.scrollTo({ top: window.scrollY + rect.top - (window.innerHeight / 2 - rect.height / 2), behavior: 'smooth' });
+      window.scrollTo({ top: window.scrollY + rect.top - (window.innerHeight/2 - rect.height/2), behavior: 'smooth' });
     }
   }
   // Immediate flash + stronger lightning ring for 10s
@@ -668,6 +677,370 @@ function highlightHashTarget() {
   setTimeout(() => el.classList.remove('lightning-highlight'), 10000);
 }
 
+function initCustomHScrollbars() {
+  const ids = ['artists-grid', 'works-grid'];
+  ids.forEach(id => {
+    const grid = document.getElementById(id);
+    if (!grid) return;
+    // remove old rails
+    grid.querySelectorAll('.hs-rail, .hs-thumb').forEach(n => n.remove());
+    const rail = createEl('div', { className: 'hs-rail' });
+    const thumb = createEl('div', { className: 'hs-thumb' });
+    grid.appendChild(rail);
+    grid.appendChild(thumb);
+    const update = () => {
+      const max = grid.scrollWidth - grid.clientWidth;
+      const gutter = 30;
+      const inner = grid.clientWidth - 2 * gutter;
+      const ratio = max > 0 ? grid.clientWidth / grid.scrollWidth : 1;
+      const width = Math.max(40, Math.floor(inner * ratio));
+      const left = max > 0 ? Math.floor((grid.scrollLeft / max) * (inner - width)) + gutter : gutter;
+      thumb.style.width = width + 'px';
+      thumb.style.left = left + 'px';
+    };
+    update();
+    grid.addEventListener('scroll', update);
+    window.addEventListener('resize', update);
+    // drag support
+    let dragging = false; let startX = 0; let startLeft = 0; let maxLeft = 0; let maxScroll = 0; let thumbW = 0;
+    const onDown = (e) => {
+      dragging = true; grid.classList.add('hs-dragging');
+      startX = e.clientX || (e.touches && e.touches[0]?.clientX) || 0;
+      startLeft = parseFloat(getComputedStyle(thumb).left) || 0;
+      const gutter = 30; const inner = grid.clientWidth - 2 * gutter;
+      thumbW = thumb.offsetWidth; maxLeft = gutter + (inner - thumbW); maxScroll = grid.scrollWidth - grid.clientWidth;
+      e.preventDefault();
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+      document.addEventListener('touchmove', onMove, { passive: false });
+      document.addEventListener('touchend', onUp);
+    };
+    const onMove = (e) => {
+      if (!dragging) return;
+      const x = e.clientX || (e.touches && e.touches[0]?.clientX) || 0;
+      let nx = startLeft + (x - startX);
+      const gutter = 30; const inner = grid.clientWidth - 2 * gutter;
+      nx = Math.max(gutter, Math.min(maxLeft, nx));
+      thumb.style.left = nx + 'px';
+      const p = (nx - gutter) / ((inner - thumbW) || 1);
+      grid.scrollLeft = p * maxScroll;
+      e.preventDefault();
+    };
+    const onUp = () => {
+      dragging = false; grid.classList.remove('hs-dragging');
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+      document.removeEventListener('touchmove', onMove);
+      document.removeEventListener('touchend', onUp);
+    };
+    thumb.addEventListener('mousedown', onDown);
+    thumb.addEventListener('touchstart', onDown, { passive: false });
+    // click on rail to page scroll
+    rail.addEventListener('click', (e) => {
+      const rect = rail.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const page = grid.clientWidth * 0.8;
+      if (x < (parseFloat(getComputedStyle(thumb).left) - 10)) grid.scrollBy({ left: -page, behavior: 'smooth' });
+      else grid.scrollBy({ left: page, behavior: 'smooth' });
+    });
+  });
+}
 
+// Proximity-based enlarge: approach a card -> scale up toward original size
+function initCardProximityEnlarge() {
+  const grids = ['artists-grid', 'works-grid']
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+  const MAX_SCALE = 1.25; // roughly revert 20% shrink
+  const MIN_SCALE = 1.0;  // base scale
+  const THRESH = 170;     // px distance for influence
+  grids.forEach(grid => {
+    if (grid.dataset.proxBound === '1') return;
+    grid.dataset.proxBound = '1';
+    const cards = Array.from(grid.querySelectorAll('.card'));
+    const resetAll = () => {
+      cards.forEach(c => { c.style.setProperty('--card-scale', MIN_SCALE); c.style.zIndex = ''; });
+    };
+    resetAll();
+    const onMove = (e) => {
+      const gx = e.clientX;
+      const gy = e.clientY;
+      let topCard = null; let topScale = 0;
+      cards.forEach(c => {
+        const r = c.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dist = Math.hypot(gx - cx, gy - cy);
+        const ratio = Math.max(0, 1 - dist / THRESH);
+        const scale = MIN_SCALE + ratio * (MAX_SCALE - MIN_SCALE);
+        c.style.setProperty('--card-scale', scale.toFixed(3));
+        if (scale > topScale) { topScale = scale; topCard = c; }
+      });
+      // raise the closest card above neighbors to avoid overlap artifacts
+      cards.forEach(c => c.style.zIndex = (c === topCard && topScale > 1.02) ? '12' : '');
+      // expand player area only for the closest boosted card
+      cards.forEach(c => c.classList.remove('player-expanded'));
+      if (topCard && topScale > 1.12) topCard.classList.add('player-expanded');
+    };
+    const onLeave = () => { resetAll(); };
+    grid.addEventListener('mousemove', onMove);
+    grid.addEventListener('mouseleave', onLeave);
+    // Keyboard accessibility: focus within a card grows it
+    cards.forEach(c => {
+      c.addEventListener('focusin', () => { c.style.setProperty('--card-scale', MAX_SCALE); c.style.zIndex = '12'; c.classList.add('player-expanded'); });
+      c.addEventListener('focusout', () => { c.style.setProperty('--card-scale', MIN_SCALE); c.style.zIndex = ''; c.classList.remove('player-expanded'); });
+    });
+    // Touch: on tap, briefly boost the tapped card
+    grid.addEventListener('touchstart', (e) => {
+      const t = e.target.closest('.card');
+      if (!t) return;
+      cards.forEach(c => { if (c !== t) c.style.setProperty('--card-scale', MIN_SCALE); });
+      t.style.setProperty('--card-scale', MAX_SCALE);
+      t.style.zIndex = '12';
+      t.classList.add('player-expanded');
+      // Auto-center the tapped card horizontally within the grid and vertically in viewport
+      try {
+        // Prefer native centering where supported
+        t.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+      } catch (_) {
+        const parentGrid = t.closest('.card-grid');
+        if (parentGrid) {
+          const targetLeft = t.offsetLeft - (parentGrid.clientWidth / 2) + (t.clientWidth / 2);
+          parentGrid.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
+        }
+        const rect = t.getBoundingClientRect();
+        const delta = (rect.top + rect.height / 2) - (window.innerHeight / 2);
+        window.scrollBy({ top: delta, behavior: 'smooth' });
+      }
+      setTimeout(() => { t.style.setProperty('--card-scale', MIN_SCALE); t.style.zIndex = ''; t.classList.remove('player-expanded'); }, 1400);
+    }, { passive: true });
+  });
+}
 
+function applyDuoTitles() {
+  const nodes = document.querySelectorAll('.section-title, .hero h1, #hero-subtitle');
+  nodes.forEach(el => {
+    let t = (el.textContent || '').trim();
+    if (el.matches('.hero h1')) {
+      const main = el.querySelector('.txt');
+      if (main) t = (main.textContent || '').trim();
+    }
+    el.setAttribute('data-text', t);
+  });
+}
 
+function randomizeGradientPhases() {
+  const setDelay = (el, max = 20) => {
+    const d = -(Math.random() * max).toFixed(2) + 's';
+    el.style.setProperty('--gd-delay', d);
+  };
+  document.querySelectorAll('.menu a').forEach(el => setDelay(el, 18));
+  document.querySelectorAll('.btn').forEach(el => setDelay(el, 15));
+  document.querySelectorAll('.section-title, .hero h1').forEach(el => setDelay(el, 22));
+}
+
+function initHeroGlitch() {
+  const el = document.querySelector('.hero h1');
+  if (!el) return;
+  // Safety: ensure data-text exists
+  const t = (el.textContent || '').trim();
+  if (!el.getAttribute('data-text')) el.setAttribute('data-text', t);
+  const burst = () => {
+    el.classList.add('glitch');
+    // keep class long enough for CSS animations (>= electricScan 320ms)
+    setTimeout(() => el.classList.remove('glitch'), 420);
+  };
+  // immediate first burst after short delay so変化が分かりやすい
+  setTimeout(burst, 400);
+  setInterval(burst, 2000);
+}
+
+function initSubtitleGlitch() {
+  const el = document.getElementById('hero-subtitle');
+  if (!el || el.dataset.glitchBound === '1') return;
+  el.dataset.glitchBound = '1';
+  const t = (el.textContent || '').trim();
+  if (!el.getAttribute('data-text')) el.setAttribute('data-text', t);
+  const burst = () => {
+    el.classList.add('glitch');
+    setTimeout(() => el.classList.remove('glitch'), 420);
+  };
+  // 初回は少し遅らせて実行、その後3秒周期
+  setTimeout(burst, 600);
+  setInterval(burst, 3000);
+}
+
+// Subtle magnetic hover for platform icons (header + footer)
+function initIconMagnetism() {
+  const containers = document.querySelectorAll('.platform-logos');
+  containers.forEach(container => {
+    if (container.dataset.magnetBound === '1') return;
+    container.dataset.magnetBound = '1';
+    const THRESH = 160;
+    const MAX_SHIFT = 10;
+    const onMove = (e) => {
+      const x = e.clientX, y = e.clientY;
+      container.querySelectorAll('a').forEach(a => {
+        const r = a.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dx = x - cx;
+        const dy = y - cy;
+        const dist = Math.hypot(dx, dy);
+        const ratio = Math.max(0, 1 - dist / THRESH);
+        const tx = (dx / THRESH) * MAX_SHIFT * ratio;
+        const ty = (dy / THRESH) * MAX_SHIFT * ratio;
+        a.style.transform = `translate(${tx}px, ${ty}px)`;
+        const img = a.querySelector('img');
+        if (img) img.style.opacity = (0.72 + 0.28 * ratio).toFixed(2);
+      });
+    };
+    const onLeave = () => {
+      container.querySelectorAll('a').forEach(a => {
+        a.style.transform = '';
+        const img = a.querySelector('img');
+        if (img) img.style.opacity = '';
+      });
+    };
+    container.addEventListener('mousemove', onMove);
+    container.addEventListener('mouseleave', onLeave);
+    container.addEventListener('touchend', onLeave, { passive: true });
+  });
+}
+
+// Twinkling starfield
+function initStarfield() {
+  const canvas = document.getElementById('stars');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w, h, dpr, stars = [], sprite;
+  let meteors = [];
+  let spawnTarget = 0; // seconds until next meteor
+
+  function makeSprite() {
+    const s = document.createElement('canvas');
+    const sz = 32; s.width = s.height = sz;
+    const g = s.getContext('2d');
+    const gr = g.createRadialGradient(sz/2, sz/2, 0, sz/2, sz/2, sz/2);
+    gr.addColorStop(0, 'rgba(255,255,255,1)');
+    gr.addColorStop(0.3, 'rgba(255,255,255,0.8)');
+    gr.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = gr; g.beginPath(); g.arc(sz/2, sz/2, sz/2, 0, Math.PI*2); g.fill();
+    return s;
+  }
+
+  function resize() {
+    dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    w = Math.floor(window.innerWidth);
+    h = Math.floor(window.innerHeight);
+    canvas.width = Math.floor(w * dpr);
+    canvas.height = Math.floor(h * dpr);
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    // regen stars on resize
+    const count = Math.floor((w * h) / 8000); // density
+    stars = new Array(count).fill(0).map(() => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: 0.6 + Math.random() * 1.6,           // radius factor
+      a: 0.5 + Math.random() * 0.5,           // base alpha
+      sp: 0.5 + Math.random() * 1.5,          // twinkle speed
+      ph: Math.random() * Math.PI * 2,        // twinkle phase
+      vy: -((16 + Math.random() * 36) * 1.5)  // upward px/sec (now 1.5x faster than before)
+    }));
+    if (!sprite) sprite = makeSprite();
+    // schedule first meteor (1.5x more frequent)
+    spawnTarget = rand(6, 14) / 1.5;
+  }
+
+  let t0 = performance.now();
+  function frame(t) {
+    const dt = (t - t0) / 1000; t0 = t;
+    ctx.clearRect(0, 0, w, h);
+    for (let i = 0; i < stars.length; i++) {
+      const s = stars[i];
+      // upward drift
+      s.y += s.vy * dt;
+      if (s.y < -12) { s.y = h + 12; s.x = Math.random() * w; }
+      const tw = 0.35 * Math.sin(t * 0.002 * s.sp + s.ph);
+      const alpha = Math.max(0, Math.min(1, s.a + tw));
+      ctx.globalAlpha = alpha;
+      const size = s.r * 6;
+      ctx.drawImage(sprite, s.x - size/2, s.y - size/2, size, size);
+    }
+    ctx.globalAlpha = 1;
+
+    // spawn meteors occasionally
+    spawnTarget -= dt;
+    if (spawnTarget <= 0) { meteors.push(spawnMeteor()); spawnTarget = rand(7, 15) / 1.5; }
+    // update + draw meteors
+    drawMeteors(ctx, meteors, dt, w, h);
+    requestAnimationFrame(frame);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  requestAnimationFrame(frame);
+
+  function rand(a, b) { return a + Math.random() * (b - a); }
+
+  function spawnMeteor() {
+    // start from top-left or top-right edge
+    const fromLeft = Math.random() < 0.5;
+    const startX = fromLeft ? rand(-80, 0) : rand(w, w + 80);
+    const startY = rand(-60, 80);
+    const speed = rand(260, 480); // px/sec
+    const angle = fromLeft ? rand(Math.PI * 0.10, Math.PI * 0.22) // 18°–40° down-right
+                           : Math.PI - rand(Math.PI * 0.10, Math.PI * 0.22); // down-left
+    const vx = Math.cos(angle) * speed;
+    const vy = Math.sin(angle) * speed;
+    const length = rand(120, 220);
+    const life = rand(0.8, 1.6);
+    const colors = ['#00e5ff', '#ff2fb9', '#7b61ff'];
+    let i1 = Math.floor(Math.random() * colors.length);
+    let i2 = Math.floor(Math.random() * colors.length);
+    if (i2 === i1) i2 = (i2 + 1) % colors.length;
+    const c1 = colors[i1];
+    const c2 = colors[i2];
+    return { x: startX, y: startY, vx, vy, length, life, c1, c2 };
+  }
+
+  function drawMeteors(ctx, meteors, dt, w, h) {
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    for (let i = meteors.length - 1; i >= 0; i--) {
+      const m = meteors[i];
+      m.x += m.vx * dt; m.y += m.vy * dt; m.life -= dt;
+      if (m.life <= 0 || m.x < -200 || m.x > w + 200 || m.y > h + 200) {
+        meteors.splice(i, 1); continue;
+      }
+      const dir = Math.atan2(m.vy, m.vx);
+      const nx = Math.cos(dir), ny = Math.sin(dir);
+      const tailX = m.x - nx * m.length;
+      const tailY = m.y - ny * m.length;
+      const grad = ctx.createLinearGradient(tailX, tailY, m.x, m.y);
+      // two-color neon gradient with transparent tail
+      grad.addColorStop(0.00, m.c1 + '00');
+      grad.addColorStop(0.10, m.c1 + '55');
+      grad.addColorStop(0.50, m.c1 + 'ff');
+      grad.addColorStop(0.80, m.c2 + 'ff');
+      grad.addColorStop(1.00, '#ffffff');
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 3;
+      ctx.shadowColor = m.c2;
+      ctx.shadowBlur = 36;
+      ctx.beginPath();
+      ctx.moveTo(tailX, tailY);
+      ctx.lineTo(m.x, m.y);
+      ctx.stroke();
+      // head glow
+      ctx.fillStyle = m.c2;
+      ctx.shadowBlur = 40;
+      ctx.beginPath();
+      ctx.arc(m.x, m.y, 2.2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+}
