@@ -27,6 +27,7 @@
   "news": {
     "subtitle": "最新のお知らせ・リリース情報",
     "items": [
+      { "date": "2025-12-31", "title": "Auri-Nova 1st Album： Hold the Light：リリース", "url": "#work-hold-the-light" },
       { "date": "2025-11-27", "title": "輪猫（Rin-neko) アルバム「MIRROR WORLD」リリース", "url": "#work-mirror-world" },
       { "date": "2025-11-20", "title": "SHION 1st ALBUM 「Love Chronicle -toki no kioku-」リリース", "url": "#work-love-chronicle-toki-no-kioku" },
       { "date": "2025-10-14", "title": "LUMINA 1st ALBUM 「Tideglass」リリース", "url": "#work-tideglass" },
@@ -118,7 +119,6 @@
         "title": "Auri‑Nova",
         "meta": "Future Bass / Alt-Pop",
         "image": "image/auri-nova.png",
-        "badge": "coming soon",
         "featured": true,
         "tags": ["Produce", "Vocal", "Songwriting"],
         "links": [
@@ -127,7 +127,7 @@
           { "label": "YouTube", "href": "#" },
           { "label": "Amazon", "href": "#" }
         ],
-        "player": { "spotify": "", "height": 152 }
+        "player": { "spotify": "https://open.spotify.com/embed/track/4wKl9mFmt7vXztkGXbn9hV?utm_source=generator", "height": 352 }
       }
     ]
   },
@@ -135,18 +135,21 @@
     "subtitle": "リリース・楽曲提供・リミックス",
     "items": [
       {
-        "title": "Hold the Right",
-        "meta": "Album / coming soon",
+        "title": "Hold the Light",
+        "meta": "Album / 2025",
         "image": "Hold the Right.png",
         "featured": true,
         "tags": ["Album", "Auri‑Nova"],
-        "badge": "coming soon",
         "links": [
-          { "label": "Apple", "href": "#" },
-          { "label": "Spotify", "href": "#" },
-          { "label": "YouTube", "href": "#" },
-          { "label": "Amazon", "href": "#" }
-        ]
+          { "label": "Apple", "href": "https://music.apple.com/jp/album/hold-the-light/1865193727" },
+          { "label": "Spotify", "href": "https://open.spotify.com/track/4wKl9mFmt7vXztkGXbn9hV?si=-33g0oJXSeedVAOdiZfZ2A" },
+          { "label": "YouTube", "href": "https://music.youtube.com/playlist?list=OLAK5uy_lySHyk5C89uPqdvrOXtbvTIpG-jKScWR4&si=sF63l9QaBvtw67vj" },
+          { "label": "Amazon", "href": "https://music.amazon.co.jp/albums/B0GC2GRL7B?ref=dm_sh_QR5fappDCXnXOczEtDLuaoPK6" }
+        ],
+        "player": {
+          "spotify": "https://open.spotify.com/embed/track/4wKl9mFmt7vXztkGXbn9hV?utm_source=generator",
+          "height": 352
+        }
       },
       {
         "title": "Tideglass",
