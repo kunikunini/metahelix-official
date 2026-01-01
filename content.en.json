@@ -281,7 +281,7 @@
           }
         ],
         "player": {
-          "spotify": "https://open.spotify.com/embed/track/4wKl9mFmt7vXztkGXbn9hV?utm_source=generator",
+          "spotify": "https://open.spotify.com/embed/album/43YjQ2a5X6eJ1o7J5f6T8r?utm_source=generator",
           "height": 352
         }
       }
@@ -306,7 +306,7 @@
           },
           {
             "label": "Spotify",
-            "href": "https://open.spotify.com/track/4wKl9mFmt7vXztkGXbn9hV?si=-33g0oJXSeedVAOdiZfZ2A"
+            "href": "https://open.spotify.com/album/43YjQ2a5X6eJ1o7J5f6T8r"
           },
           {
             "label": "YouTube",
@@ -318,7 +318,7 @@
           }
         ],
         "player": {
-          "spotify": "https://open.spotify.com/embed/track/4wKl9mFmt7vXztkGXbn9hV?utm_source=generator",
+          "spotify": "https://open.spotify.com/embed/album/43YjQ2a5X6eJ1o7J5f6T8r?utm_source=generator",
           "height": 352
         }
       },
